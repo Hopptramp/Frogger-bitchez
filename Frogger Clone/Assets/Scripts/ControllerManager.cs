@@ -18,14 +18,16 @@ public class ControllerManager : MonoBehaviour
 	private int MAX_PLAYERS;
 	private int MAX_CONTROLLERS;
 	
-	public XInputControl[] XInputPlayers; //Contains up to date controller data including non active controllers
+	private XInputControl[] XInputPlayers; //Contains up to date controller data including non active controllers
 
-	public bool[] ready; //Contains the data that represents what players are ready
+	private bool[] ready; //Contains the data that represents what players are ready
+
+	public string nextScene;
 
 	// Use this for initialization
 	void Start () 
 	{
-		MAX_PLAYERS = GameObject.FindGameObjectWithTag("GlobalConstant").GetComponent<ConstantData>().MAX_PLAYERS; //GET FROM CONSTANT DATA
+		MAX_PLAYERS = GameObject.FindGameObjectWithTag("ConstantData").GetComponent<ConstantData>().MAX_PLAYERS; //GET FROM CONSTANT DATA
 		MAX_CONTROLLERS = MAX_PLAYERS / 2;
 		XInputPlayers = new XInputControl[MAX_PLAYERS/2];
 		ready = new bool[MAX_PLAYERS];
@@ -66,6 +68,16 @@ public class ControllerManager : MonoBehaviour
 						}
 					}
 				}
+			}
+		}
+
+		//If master controller is connected
+		if(XInputPlayers[0].state.IsConnected)
+		{
+			//Master controller presses start to automatically begin game
+			if(XInputPlayers[0].state.Buttons.Start == ButtonState.Pressed)
+			{
+				Application.LoadLevel (nextScene);
 			}
 		}
 	}
@@ -119,7 +131,7 @@ public class ControllerManager : MonoBehaviour
 			}
 		}
 
-		GameObject.FindGameObjectWithTag ("GlobalConstant").GetComponent<ConstantData> ().SetupXInputControl (activePlayers, XInputPlayers, ready);
+		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().SetupXInputControl (activePlayers, XInputPlayers, ready);
 
 	}
 }

@@ -7,6 +7,7 @@ public class ConstantData : MonoBehaviour
 	public int MAX_PLAYERS = 20;
 	public int MAX_CONTROLLERS;
 	public XInputControl[] XInputPlayers;
+	public int numOfPlayers;
 	
 	// Use this for initialization
 	void Start () 
@@ -25,6 +26,7 @@ public class ConstantData : MonoBehaviour
 	public void SetupXInputControl(int _activePlayers, XInputControl[] _allXInput, bool[] _readyPlayers)
 	{
 		XInputPlayers = new XInputControl[_activePlayers];
+		numOfPlayers = _activePlayers;
 		int counter = 0;   //Counter which is used to place elements into the new XInputPlayers structure
 
 		//For all players

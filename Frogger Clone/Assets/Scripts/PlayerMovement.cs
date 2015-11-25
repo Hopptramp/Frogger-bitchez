@@ -1,57 +1,132 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 
-public class PlayerMovement : MonoBehaviour {
-
-	public GameObject frog;
+public class PlayerMovement : MonoBehaviour 
+{
+	//public GameObject frog;
 	private Animator anim;
+	private XInputControl inputControl;
 
-	bool moving = false;
-	public bool movingHorizontally = false;
-	public bool movingVertically = false;
-	bool facingLeft = false;
-	bool facingRight = false;
-	bool facingUp = false;
-	bool facingDown = false;
+	private bool moving = false;
+	private float movementSpeed = 5.0f;
+	private bool isMovementPaused = false;
+	//public bool movingHorizontally = false;
+	//public bool movingVertically = false;
 
-	int stateIdle = 0;
+	enum Direction
+	{
+		UP = 0,
+		DOWN,
+		LEFT,
+		RIGHT
+	}
+
+	Direction direction;
+
+	//Use ENUM 
+	/*int stateIdle = 0;
 	int stateUp = 1;
 	int stateDown = 2;
 	int stateLeft = 3;
-	int stateRight = 4;
+	int stateRight = 4;*/
 
 	public int currentState;
 	int oldState;
 
-	public float movementSpeed = 1.0f;
 
-	float inputHor;
-	float inputVert;
+	//float inputHor;
+	//float inputVert;
 
-	void awake () {
-	}
-	// Use this for initialization
-	void Start () {
-
-
-	}
-	void FixedUpdate () {
-
-		inputHor = Input.GetAxis ("Horizontal");
-		inputVert = Input.GetAxis ("Vertical");
-		anim = GetComponent<Animator>();
-
-		Direction (inputHor, inputVert);
-		Movement ( inputHor, inputVert);
-		Animations (inputHor, inputVert, anim);
-
-	}
-	// Update is called once per frame
-	void Update () {
-	}
-	void Direction (float _inputHor, float _inputVert)
+	void awake () 
 	{
-		//checks if moving in any direction
+
+	}
+
+	void Start () 
+	{
+		anim = GetComponent<Animator>();
+	}
+
+	// Update is called once per frame
+	void Update () 
+	{
+		//Update the controller states
+		inputControl.prevState = inputControl.state;
+		inputControl.state = GamePad.GetState(inputControl.playerIndex);
+
+		//inputHor = Input.GetAxis ("Horizontal");
+		//inputVert = Input.GetAxis ("Vertical");
+		if(!isMovementPaused)
+		{
+			ApplyDirection ();
+			ApplyMovement ();
+			ApplyAnimations ();
+		}
+	}
+
+	void ApplyDirection ()
+	{
+		//set moving to false and if input is acquired set to true
+		moving = false;
+		//If up is pressed
+		if (UP (inputControl.state)) 
+		{
+			//and up was not getting pressed last update
+			if(!UP (inputControl.prevState))
+			{
+				//and not already heading up
+				if(direction != Direction.UP)
+				{
+					direction = Direction.UP;
+				}
+			}
+			moving = true;
+		}
+		//If down is pressed
+		if (DOWN (inputControl.state)) 
+		{
+			//and down was not getting pressed last update
+			if(!DOWN (inputControl.prevState))
+			{
+				//and not already heading heading
+				if(direction != Direction.DOWN)
+				{
+					direction = Direction.DOWN;
+				}
+			}
+			moving = true;
+		}
+		//If left is pressed
+		if (LEFT (inputControl.state)) 
+		{
+			//and left was not getting pressed last update
+			if(!LEFT (inputControl.prevState))
+			{
+				//and not already heading left
+				if(direction != Direction.LEFT)
+				{
+					direction = Direction.LEFT;
+				}
+			}
+			moving = true;
+		}
+		//If right is pressed
+		if (RIGHT (inputControl.state)) 
+		{
+			//and right was not getting pressed last update
+			if(!RIGHT (inputControl.prevState))
+			{
+				//and not already heading right
+				if(direction != Direction.RIGHT)
+				{
+					direction = Direction.RIGHT;
+				}
+			}
+			moving = true;
+		}
+	
+		/*//checks if moving in any direction
 		if ((_inputHor != 0) || (_inputVert != 0)) {
 			moving = true;
 		} 
@@ -110,65 +185,169 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		}
 		//not moving horizontally
-		else {
+		else 
+		{
 			movingHorizontally = false;
-		}
+		}*/
 	}
 
-	void Movement (float _inputHor, float _inputVert) {
-
-		if (movingHorizontally == true) {
+	void ApplyMovement () 
+	{
+		if (moving) 
+		{
+			switch(direction)
+			{
+			case Direction.UP:
+				transform.Translate (movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+				break;
+			case Direction.DOWN:
+				transform.Translate (-movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+				break;
+			case Direction.LEFT:
+				transform.Translate (0.0f, -movementSpeed * Time.deltaTime, 0.0f);
+				break;
+			case Direction.RIGHT:
+				transform.Translate (0.0f, movementSpeed * Time.deltaTime, 0.0f);
+				break;
+			}
+		}
+		/*if (movingHorizontally == true) {
 			transform.Translate (movementSpeed * _inputHor * Time.deltaTime, 0.0f, 0.0f);
 		}
 		if (movingVertically == true) {
 			transform.Translate (0.0f, movementSpeed * _inputVert * Time.deltaTime, 0.0f);
-		}
+		}*/
 
 	}
 
-	void Animations ( float _inputHor, float _inputVert, Animator _anim) {
-
+	void ApplyAnimations () 
+	{
 		//if moving do these animations
-		if (moving == true) {
-
-			if (facingRight == true) { 
-
-				_anim.SetTrigger ("moveRight");
-			}
-			if (facingLeft == true) { 
-			
-				_anim.SetTrigger ("moveLeft");
-			
-			}
-			if (facingUp == true) {
-
-				_anim.SetTrigger ("moveUp");
-			}
-			if (facingDown == true) {
-			
-				_anim.SetTrigger ("moveDown");
+		if (moving == true) 
+		{
+			switch(direction)
+			{
+			case Direction.UP:
+				anim.SetTrigger ("moveUp");
+				break;
+			case Direction.DOWN:
+				anim.SetTrigger ("moveDown");
+				break;
+			case Direction.LEFT:
+				anim.SetTrigger ("moveLeft");
+				break;
+			case Direction.RIGHT:
+				anim.SetTrigger ("moveRight");
+				break;
 			}
 		} 
 		//else do idle animations
-		else {
-
-			if (facingRight == true) { 
-				
-				_anim.SetTrigger ("moveRight");
-			}
-			if (facingLeft == true) { 
-				
-				_anim.SetTrigger ("moveLeft");
-				
-			}
-			if (facingUp == true) {
-				
-				_anim.SetTrigger ("moveUp");
-			}
-			if (facingDown == true) {
-				
-				_anim.SetTrigger ("moveDown");
+		else 
+		{
+			switch(direction)
+			{
+			case Direction.UP:
+				anim.SetTrigger ("moveUp");
+				break;
+			case Direction.DOWN:
+				anim.SetTrigger ("moveDown");
+				break;
+			case Direction.LEFT:
+				anim.SetTrigger ("moveLeft");
+				break;
+			case Direction.RIGHT:
+				anim.SetTrigger ("moveRight");
+				break;
 			}
 		}
 	}
+
+	bool UP(GamePadState _state)
+	{
+		if (inputControl.isDpad) 
+		{
+			if (_state.DPad.Up == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (_state.Buttons.Y == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	bool DOWN(GamePadState _state)
+	{
+		if (inputControl.isDpad) 
+		{
+			if (_state.DPad.Down == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (_state.Buttons.A == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool LEFT(GamePadState _state)
+	{
+		if (inputControl.isDpad) 
+		{
+			if (_state.DPad.Left == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (_state.Buttons.X == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool RIGHT(GamePadState _state)
+	{
+		if (inputControl.isDpad) 
+		{
+			if (_state.DPad.Right == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (_state.Buttons.B == ButtonState.Pressed) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void SetInputControl(XInputControl _inputControl)
+	{
+		inputControl = _inputControl;
+	}
+
+	public void SetMovementIsPaused(bool _b)
+	{
+		isMovementPaused = _b;
+	}
+
+
 }
