@@ -1,0 +1,638 @@
+fileFormatVersion: 2
+guid: 64ffd27045d331c49af273187dcba7c3
+timeCreated: 1448454226
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: frogger Sprites_0
+    21300002: frogger Sprites_1
+    21300004: frogger Sprites_2
+    21300006: frogger Sprites_3
+    21300008: frogger Sprites_4
+    21300010: frogger Sprites_5
+    21300012: frogger Sprites_6
+    21300014: frogger Sprites_7
+    21300016: frogger Sprites_8
+    21300018: frogger Sprites_9
+    21300020: frogger Sprites_10
+    21300022: frogger Sprites_11
+    21300024: frogger Sprites_12
+    21300026: frogger Sprites_13
+    21300028: frogger Sprites_14
+    21300030: frogger Sprites_15
+    21300032: frogger Sprites_16
+    21300034: frogger Sprites_17
+    21300036: frogger Sprites_18
+    21300038: frogger Sprites_19
+    21300040: frogger Sprites_20
+    21300042: frogger Sprites_21
+    21300044: frogger Sprites_22
+    21300046: frogger Sprites_23
+    21300048: frogger Sprites_24
+    21300050: frogger Sprites_25
+    21300052: frogger Sprites_26
+    21300054: frogger Sprites_27
+    21300056: frogger Sprites_28
+    21300058: frogger Sprites_29
+    21300060: frogger Sprites_30
+    21300062: frogger Sprites_31
+    21300064: frogger Sprites_32
+    21300066: frogger Sprites_33
+    21300068: frogger Sprites_34
+    21300070: frogger Sprites_35
+    21300072: frogger Sprites_36
+    21300074: frogger Sprites_37
+    21300076: frogger Sprites_38
+    21300078: frogger Sprites_40
+    21300080: frogger Sprites_41
+    21300082: frogger Sprites_42
+    21300084: frogger Sprites_43
+    21300086: frogger Sprites_44
+    21300088: frogger Sprites_46
+    21300090: frogger Sprites_58
+    21300092: frogger Sprites_59
+    21300094: frogger Sprites_60
+    21300096: frogger Sprites_61
+    21300098: frogger Sprites_62
+    21300100: frogger Sprites_63
+    21300102: frogger Sprites_64
+    21300104: frogger Sprites_65
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: frogger Sprites_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 423
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 423
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_2
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 424
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_3
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 423
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_4
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 423
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_5
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 424
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_6
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 423
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 358
+        width: 399
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 314
+        width: 399
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_9
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 280
+        width: 178
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_10
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 248
+        width: 117
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_11
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 216
+        width: 85
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_12
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 231
+        width: 38
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_13
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 215
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_14
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 203
+        width: 37
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_15
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 180
+        width: 28
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_16
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 178
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_17
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 177
+        width: 24
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_18
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 178
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_19
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 175
+        width: 38
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_20
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 145
+        width: 24
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_21
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 145
+        width: 24
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_22
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 145
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_23
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 147
+        width: 46
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_24
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 150
+        width: 37
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_25
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 110
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_26
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 110
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_27
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 109
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_28
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 107
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_29
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 105
+        width: 89
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_30
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 81
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_31
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 76
+        width: 22
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_32
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 81
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_33
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 76
+        width: 22
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_34
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 72
+        width: 89
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_35
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 39
+        width: 31
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_36
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 38
+        width: 31
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_37
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 40
+        width: 29
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_38
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 37
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_40
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 38
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_41
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 36
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_42
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 34
+        width: 27
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_43
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 36
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_44
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 34
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_46
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 8
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_58
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 7
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_59
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 7
+        width: 27
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_60
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 8
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_61
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_62
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 7
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_63
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 7
+        width: 19
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_64
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 7
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: frogger Sprites_65
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 8
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
