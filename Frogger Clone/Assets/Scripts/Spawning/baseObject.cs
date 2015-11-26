@@ -12,14 +12,7 @@ public class baseObject : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter2D(Collision2D coll)
-	{
-		if (coll.gameObject.tag == "Boundary") 
-		{
-			Destroy(this);
-		}
-		
-	}
+
 
 	public void assignParameters(logStructs _struct)
 	{
