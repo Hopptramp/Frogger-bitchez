@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class baseObject : MonoBehaviour {
 
 	float speedx;
@@ -13,14 +14,19 @@ public class baseObject : MonoBehaviour {
 	}
 
 
+    public void test()
+    {
 
-	public void assignParameters(logStructs _struct)
+    }
+
+	public void assignParameters(statsStruct _struct)
 	{
 		speedx = _struct.speedX;
 		speedz = _struct.speedY;
 		
 		transform.localScale = new Vector3 (_struct.sizeX, _struct.sizeY, 1 );
 	}
+    
 
 	void FixedUpdate() 
 	{

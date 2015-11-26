@@ -25,6 +25,8 @@ public class LevelTileManager : MonoBehaviour {
     public List<GameObject> waterTile = new List<GameObject>();
     public GameObject roadTile;
 
+    public GameObject aSpawner;
+
     public List <floatPair> waterBounds = new List<floatPair>();
     public List <floatPair> roadBounds = new List<floatPair>();
     
@@ -94,6 +96,37 @@ public class LevelTileManager : MonoBehaviour {
                 //Set to be static.
                 instance.isStatic = true;
 
+            }
+        }
+
+        for (int y = 0; y < rows; y++)
+        {
+            Vector3 spawnerPos = Vector3.zero;
+            int toSpawn = 0;
+            foreach (floatPair floats in waterBounds)
+            {
+
+                if (y >= floats.bottom && y <= floats.top)
+                {
+                    spawnerPos = new Vector3(-3,y,-0.2f);
+                    toSpawn = 1;
+                }
+            }
+            foreach (floatPair floats in roadBounds)
+            {
+                if (y >= floats.bottom && y <= floats.top)
+                {
+                    spawnerPos = new Vector3(columns + 2, y, -0.2f);
+                    toSpawn = 2;
+                }
+            }
+            if (spawnerPos != Vector3.zero)
+            {
+                GameObject spawnerInstance = Instantiate(aSpawner, spawnerPos, Quaternion.identity) as GameObject;
+                spawnerInstance.GetComponent<Spawner>().spawnWhat = toSpawn;
+                spawnerInstance.GetComponent<Spawner>().logStats.sizeX *= mapScale;
+                spawnerInstance.GetComponent<Spawner>().logStats.sizeY *= mapScale;
+                spawnerInstance.transform.SetParent(mapHolder);
             }
         }
         //Move mapholder to correct position

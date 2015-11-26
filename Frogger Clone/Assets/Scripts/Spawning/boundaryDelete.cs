@@ -17,7 +17,7 @@ public class boundaryDelete : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll)
 	{
-		if (coll.gameObject.tag == "Platform") 
+		if (coll.gameObject.tag == "Platform" || coll.gameObject.tag == "Enemy") 
 		{
 			Destroy(coll.gameObject);
 		}
