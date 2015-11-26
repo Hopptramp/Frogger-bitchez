@@ -1,8 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+[System.Serializable]
+public struct statsStruct
+    {
+        public float sizeX;
+        public float sizeY;
+        public float speedX;
+        public float speedY;
+        public float delay;
+    }
+
 public class Spawner : MonoBehaviour 
 {
+    
+    public statsStruct crocStats;
+    public statsStruct logStats;
+
 	// input parameters to define what spawns
 	public GameObject[] objectToSpawn;
 	public int spawnWhat; // the prefab in the array must match the case number in the switch statement (with a minus 1)
@@ -51,15 +66,14 @@ public class Spawner : MonoBehaviour
 			//instantiate the object from a prefab
 			platform = Instantiate(objectToSpawn[spawnWhat - 1], gameObject.transform.position, Quaternion.identity) as GameObject;
 			// assign the parameters by passing through a struct from the prefab
-			logStructs settings = GetComponent<logStructs>();
-			platform.GetComponent<baseObject>().assignParametersLog(settings);
-			if(settings.speedX < 0)
+			platform.GetComponent<baseObject>().assignParameters(logStats);
+			if(logStats.speedX < 0)
 			{
 				// invert the speed of the log
-				settings.speedX *= -1;
+				logStats.speedX *= -1;
 			}
 			//set the delay
-			delay = settings.delay;
+			delay = logStats.delay;
 			// sets platform's parent to the parent of the spawner
 			platform.transform.parent = transform.parent;
 
@@ -70,16 +84,16 @@ public class Spawner : MonoBehaviour
 			//instantiate the object from a prefab
 			platformLeft = Instantiate(objectToSpawn[spawnWhat - 1], gameObject.transform.position, Quaternion.identity) as GameObject;
 			// find the settings from a struct
-			logStructs settingsLeft = GetComponent<logStructs>();
-			if(settingsLeft.speedX > 0)
+			
+			if(logStats.speedX > 0)
 			{
 				// invert the speed of the log
-				settingsLeft.speedX *= -1;
+				logStats.speedX *= -1;
 			}
 			//apply settings
-			platformLeft.GetComponent<baseObject>().assignParametersLog(settingsLeft);
+			platformLeft.GetComponent<baseObject>().assignParameters(logStats);
 			//reset the delay
-			delay = settingsLeft.delay;
+			delay = logStats.delay;
 
 			// sets platform's parent to the parent of the spawner
 			platformLeft.transform.parent = transform.parent;
@@ -90,16 +104,16 @@ public class Spawner : MonoBehaviour
 			//instantiate croc
 			Croc = Instantiate(objectToSpawn[spawnWhat - 1], gameObject.transform.position, Quaternion.identity) as GameObject;
 			// find it's settings
-			CrocStruct settingsCroc = GetComponent<CrocStruct>();
+			
 			// assign it's settings
-			Croc.GetComponent<baseObject>().assignParametersCroc(settingsCroc);
-			if(settingsCroc.speedX < 0)
+			Croc.GetComponent<baseObject>().assignParameters(crocStats);
+			if(crocStats.speedX < 0)
 			{
-				settingsCroc.speedX *= -1;
-				settingsCroc.sizeX *= -1;
+				crocStats.speedX *= -1;
+				crocStats.sizeX *= -1;
 			}
 			//reset the delay
-			delay = settingsCroc.delay;
+			delay = crocStats.delay;
 
 
 			// sets platform's parent to the parent of the spawner
@@ -111,17 +125,17 @@ public class Spawner : MonoBehaviour
 			//instantiate
 			CrocLeft = Instantiate(objectToSpawn[spawnWhat - 1], gameObject.transform.position, Quaternion.identity) as GameObject;
 			//find settings
-			CrocStruct settingsCrocLeft = GetComponent<CrocStruct>();
+			
 			//invert the speed
-			if(settingsCrocLeft.speedX > 0)
+			if(crocStats.speedX > 0)
 			{
-				settingsCrocLeft.speedX *= -1;
-				settingsCrocLeft.sizeX *= -1;
+				crocStats.speedX *= -1;
+				crocStats.sizeX *= -1;
 			}
 			//assign
-			CrocLeft.GetComponent<baseObject>().assignParametersCroc(settingsCrocLeft);
+			CrocLeft.GetComponent<baseObject>().assignParameters(crocStats);
 			//reset the delay
-			delay = settingsCrocLeft.delay;
+			delay = crocStats.delay;
 
 
 			// sets platform's parent to the parent of the spawner

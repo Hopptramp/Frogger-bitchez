@@ -124,6 +124,8 @@ public class LevelTileManager : MonoBehaviour {
             {
                 GameObject spawnerInstance = Instantiate(aSpawner, spawnerPos, Quaternion.identity) as GameObject;
                 spawnerInstance.GetComponent<Spawner>().spawnWhat = toSpawn;
+                spawnerInstance.GetComponent<Spawner>().logStats.sizeX *= mapScale;
+                spawnerInstance.GetComponent<Spawner>().logStats.sizeY *= mapScale;
                 spawnerInstance.transform.SetParent(mapHolder);
             }
         }
