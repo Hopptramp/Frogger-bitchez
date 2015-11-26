@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
 
 
 	public float movementSpeed = 5.0f;
-	public float movingDistance = 0;
-	public float completeMoveDistance = 5.0f;
+	public float completeMoveDistance = 1.0f;
+	public float movingDistance = 0.0f;
 
 	public bool completedMove = false;
 	private bool moving = false;
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void Start () 
 	{
-
+		completeMoveDistance = movementSpeed;
 		anim = GetComponentInChildren<Animator>();
 	}
 
@@ -70,8 +70,8 @@ public class PlayerMovement : MonoBehaviour
 		if(!isMovementPaused)
 		{
 			ApplyDirection ();
-			fullMove();
 			ApplyMovement ();
+			audioLoop();
 			ApplyAnimations ();
 		}
 	}
@@ -206,9 +206,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (moving) 
 		{
-			if ( completedMove == true){
-			AudioSource.PlayClipAtPoint(moveSound1, transform.position);
-			}
+
 			switch(direction)
 			{
 			case Direction.UP:
@@ -261,16 +259,16 @@ public class PlayerMovement : MonoBehaviour
 			switch(direction)
 			{
 			case Direction.UP:
-				anim.SetTrigger ("moveUp");
+				anim.SetTrigger ("idle");
 				break;
 			case Direction.DOWN:
-				anim.SetTrigger ("moveDown");
+				anim.SetTrigger ("idle");
 				break;
 			case Direction.LEFT:
-				anim.SetTrigger ("moveLeft");
+				anim.SetTrigger ("idle");
 				break;
 			case Direction.RIGHT:
-				anim.SetTrigger ("moveRight");
+				anim.SetTrigger ("idle");
 				break;
 			}
 		}
@@ -383,29 +381,21 @@ public class PlayerMovement : MonoBehaviour
 	{
 		isMovementPaused = _b;
 	}
-
-	void fullMove() {
-
-		if (movingDistance == 0.0f) {
-			completedMove = true;
-		}
-		if (movingDistance <= completeMoveDistance && moving == true) {
-
-			completedMove = false;
-			movingDistance += movementSpeed * Time.deltaTime;
-		} 
-		else if(movingDistance > completeMoveDistance) {
-			movingDistance = 0;
-			completedMove = false;
-		}
-		else if (moving == false) {
-			movingDistance = 0;
-			completedMove = false;
-		} 
-		else {
-			movingDistance = 0;
-			completedMove = false;
-		} 
+	void audioLoop(){
+		//if (moving == true) {
+		if (movingDistance >= completeMoveDistance -0.01) {
+				//AudioSource.PlayClipAtPoint (moveSound1, transform.position);
+			SoundManager.instance.RandomizeSfx(moveSound1);
+			}
+			if (movingDistance > completeMoveDistance) {
+				movingDistance = 0.0f;
+			}
+			if (moving == true) {
+				movingDistance += movementSpeed * Time.deltaTime;
+			}
+			if (moving == false) {
+			movingDistance = completeMoveDistance -0.02f;
+			}
+		//}
 	}
-
-}
+	}
