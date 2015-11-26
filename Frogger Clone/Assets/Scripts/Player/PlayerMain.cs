@@ -1,11 +1,17 @@
-﻿using UnityEngine;
+﻿//#define XINPUT_CONTROL
+
+using UnityEngine;
 using System.Collections;
+
+#if XINPUT_CONTROL
 using XInputDotNetPure;
+#endif
+
 
 public class PlayerMain : MonoBehaviour 
 {
 	private int playerNumber;
-	private XInputControl inputControl;
+	private InputControl inputControl;
 
 	// Use this for initialization
 	void Start () 
@@ -19,10 +25,13 @@ public class PlayerMain : MonoBehaviour
 	
 	}
 
-	public void SetupPlayer(int _playerNumber, XInputControl _inputControl)
+	public void SetupPlayer(int _playerNumber, InputControl _inputControl)
 	{
 		playerNumber = _playerNumber;
 		inputControl = _inputControl;
+#if !XINPUT_CONTROL
+		inputControl.prevState = new bool[4];
+#endif
 		GetComponent<PlayerMovement> ().SetInputControl (inputControl);
 	}
 

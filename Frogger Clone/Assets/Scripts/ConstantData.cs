@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿//#define XINPUT_CONTROL
+
+using UnityEngine;
 using System.Collections;
+
+#if XINPUT_CONTROL
 using XInputDotNetPure;
+#endif
 
 public class ConstantData : MonoBehaviour 
 {
 	public int MAX_PLAYERS = 20;
 	public int MAX_CONTROLLERS;
-	public XInputControl[] XInputPlayers;
+	public InputControl[] inputControllers;
 	public int numOfPlayers;
 	
 	// Use this for initialization
@@ -23,9 +28,9 @@ public class ConstantData : MonoBehaviour
 	}
 
 	//Takes the current controller structure and amount of ready structure and cuts it done to only the useful elements to set up the players in the main game
-	public void SetupXInputControl(int _activePlayers, XInputControl[] _allXInput, bool[] _readyPlayers)
+	public void SetupInputControl(int _activePlayers, InputControl[] _allInput, bool[] _readyPlayers)
 	{
-		XInputPlayers = new XInputControl[_activePlayers];
+		inputControllers = new InputControl[_activePlayers];
 		numOfPlayers = _activePlayers;
 		int counter = 0;   //Counter which is used to place elements into the new XInputPlayers structure
 
@@ -38,15 +43,15 @@ public class ConstantData : MonoBehaviour
 				//If the player is controlling the dpad
 				if((i % 2) == 0)
 				{
-					XInputPlayers[counter] = _allXInput[(int)Mathf.Floor(i / 2)];
-					XInputPlayers[counter].isDpad = true;
+					inputControllers[counter] = _allInput[(int)Mathf.Floor(i / 2)];
+					inputControllers[counter].isDpad = true;
 					++counter;
 				}
 				//if the player is controlling the buttons
 				else
 				{
-					XInputPlayers[counter] = _allXInput[(int)Mathf.Floor(i / 2)];
-					XInputPlayers[counter].isDpad = false;
+					inputControllers[counter] = _allInput[(int)Mathf.Floor(i / 2)];
+					inputControllers[counter].isDpad = false;
 					++counter;
 				}
 			}

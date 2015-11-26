@@ -42,9 +42,19 @@ public class SceneStartup : MonoBehaviour
 	{
 		for (int i = 0; i < NUM_OF_PLAYERS; ++i) 
 		{
-			Vector3 spawnPoint = new Vector3((-NUM_OF_PLAYERS/2)+(i*NUM_OF_PLAYERS),0,0); //Algorithm to determine location of player
+			int WIDTH = 10; //should be taken from level somehow
+			int multiplier;
+			if(NUM_OF_PLAYERS < 2)
+			{
+				multiplier = 0;
+			}
+			else
+			{
+				multiplier = (WIDTH - (WIDTH/10)) / (NUM_OF_PLAYERS/2);
+			}
+			Vector3 spawnPoint = new Vector3((((-NUM_OF_PLAYERS/2)+ i + 0.5f)*multiplier),0,0); //Algorithm to determine location of player
 			GameObject player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
-			player.GetComponent<PlayerMain>().SetupPlayer(i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().XInputPlayers[i]);
+			player.GetComponent<PlayerMain>().SetupPlayer(i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().inputControllers[i]);
 			player.GetComponent<PlayerMovement>().SetMovementIsPaused(true);
 		}
 	}

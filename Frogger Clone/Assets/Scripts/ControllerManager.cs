@@ -1,26 +1,37 @@
-﻿using UnityEngine;
+﻿//#define XINPUT_CONTROL
+
+using UnityEngine;
 using System.Collections;
+
+#if XINPUT_CONTROL
 using XInputDotNetPure;
+#endif
 
 //Structure to hold all the controller data
-[System.Serializable]
-public struct XInputControl
+public struct InputControl
 {
+
+#if XINPUT_CONTROL
 	public bool isActive;
 	public GamePadState state;
 	public GamePadState prevState;
 	public PlayerIndex playerIndex;
+#endif
+
 	public bool isDpad; //Means nothing till process by constant data
+	public int controllerIndex;
+	public bool[] prevState;
 }
 
 public class ControllerManager : MonoBehaviour 
 {
+
 	private int MAX_PLAYERS;
 	private int MAX_CONTROLLERS;
 	
-	public XInputControl[] XInputPlayers; //Contains up to date controller data including non active controllers
+	private InputControl[] inputControllers; //Contains up to date controller data including non active controllers
 
-	public bool[] ready; //Contains the data that represents what players are ready
+	private bool[] ready; //Contains the data that represents what players are ready
 
 	public string nextScene;
 
@@ -29,27 +40,38 @@ public class ControllerManager : MonoBehaviour
 	{
 		MAX_PLAYERS = GameObject.FindGameObjectWithTag("ConstantData").GetComponent<ConstantData>().MAX_PLAYERS; //GET FROM CONSTANT DATA
 		MAX_CONTROLLERS = MAX_PLAYERS / 2;
-		XInputPlayers = new XInputControl[MAX_PLAYERS/2];
+		inputControllers = new InputControl[MAX_CONTROLLERS];
 		ready = new bool[MAX_PLAYERS];
+
+#if !XINPUT_CONTROL
+		for(int i = 0; i < MAX_CONTROLLERS; ++i)
+		{
+			inputControllers[i].controllerIndex = i + 1;
+		}
+#endif
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
+
+#if XINPUT_CONTROL
 		SetupXInputControl ();
+
 		for(int i = 0; i < MAX_CONTROLLERS; ++i)
 		{
 			//If controller is active
-			if(XInputPlayers[i].isActive)
+			if(inputControllers[i].isActive)
 			{
 				//Update states of the controller
-				XInputPlayers[i].prevState = XInputPlayers[i].state;
-				XInputPlayers[i].state = GamePad.GetState(XInputPlayers[i].playerIndex);
+				inputControllers[i].prevState = inputControllers[i].state;
+				inputControllers[i].state = GamePad.GetState(inputControllers[i].playerIndex);
 
 				// If left shoulder button has being pressed and not ready
-				if (XInputPlayers[i].prevState.Buttons.LeftShoulder == ButtonState.Released)
+				if (inputControllers[i].prevState.Buttons.LeftShoulder == ButtonState.Released)
 				{
-					if(XInputPlayers[i].state.Buttons.LeftShoulder  == ButtonState.Pressed)
+					if(inputControllers[i].state.Buttons.LeftShoulder  == ButtonState.Pressed)
 					{
 						if(ready[i * 2] == false)
 						{
@@ -58,9 +80,9 @@ public class ControllerManager : MonoBehaviour
 					}
 				}
 				//If right shoulder button has being pressed and not ready
-				if (XInputPlayers[i].prevState.Buttons.RightShoulder == ButtonState.Released)
+				if (inputControllers[i].prevState.Buttons.RightShoulder == ButtonState.Released)
 				{
-					if(XInputPlayers[i].state.Buttons.RightShoulder == ButtonState.Pressed)
+					if(inputControllers[i].state.Buttons.RightShoulder == ButtonState.Pressed)
 					{
 						if(ready[(i * 2) + 1] == false)
 						{
@@ -72,17 +94,49 @@ public class ControllerManager : MonoBehaviour
 		}
 
 		//If master controller is connected
-		if(XInputPlayers[0].state.IsConnected)
+		if(inputControllers[0].state.IsConnected)
 		{
 			//Master controller presses start to automatically begin game
-			if(XInputPlayers[0].state.Buttons.Start == ButtonState.Pressed)
+			if(inputControllers[0].state.Buttons.Start == ButtonState.Pressed)
 			{
 				OutputToConstantData();
 				Application.LoadLevel (nextScene);
 			}
 		}
+#endif
+#if !XINPUT_CONTROL
+		//Loop through all possible controllers
+		for(int i = 0; i < 5; ++i)
+		{
+			//If left shoulder button has been pressed and not ready
+			if (Input.GetButtonDown("bumperleft" + (i + 1)))
+			{
+				if(ready[i * 2] == false)
+				{
+					ready[i * 2] = true;
+				}
+			}
+			//If right shoulder button has being pressed and not ready
+			if (Input.GetButtonDown("bumperright" + (i + 1)))
+			{
+				if(ready[(i * 2) + 1] == false)
+				{
+					ready[(i * 2) + 1] = true;
+				}
+			}
+		}
+
+		//If master controller is connected
+		if(Input.GetButtonDown("start1"))
+		{
+			OutputToConstantData();
+			Application.LoadLevel (nextScene);
+		}
+#endif
+
 	}
 
+#if XINPUT_CONTROL
 	//Attempt to find out if any new controllers have being plugged in or if any have being plugged out
 	void SetupXInputControl()
 	{
@@ -91,16 +145,16 @@ public class ControllerManager : MonoBehaviour
 		for (int i = 0; i < MAX_CONTROLLERS; ++i) 
 		{
 			//If controller previously wasn't active
-			if(!XInputPlayers[i].isActive)
+			if(!inputControllers[i].isActive)
 			{
 				PlayerIndex testPlayerIndex = (PlayerIndex)i;
 				GamePadState testState = GamePad.GetState (testPlayerIndex);
 				//And the controller is active now
 				if (testState.IsConnected) 
 				{
-					XInputPlayers[i].isActive = true;
-					XInputPlayers[i].state = testState;
-					XInputPlayers[i].playerIndex = testPlayerIndex;
+					inputControllers[i].isActive = true;
+					inputControllers[i].state = testState;
+					inputControllers[i].playerIndex = testPlayerIndex;
 				}
 			}
 			//If the controller was active
@@ -111,13 +165,14 @@ public class ControllerManager : MonoBehaviour
 				//And the controller isn't active anymore
 				if (!testState.IsConnected) 
 				{
-					XInputPlayers[i].isActive = false;
+					inputControllers[i].isActive = false;
 					//XInputPlayers[i].state;
 					//XInputPlayers[i].playerIndex;
 				}
 			}
 		}
 	}
+#endif
 
 	//Prepares to move to constant data
 	void OutputToConstantData()
@@ -132,7 +187,7 @@ public class ControllerManager : MonoBehaviour
 			}
 		}
 
-		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().SetupXInputControl (activePlayers, XInputPlayers, ready);
+		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().SetupInputControl (activePlayers, inputControllers, ready);
 
 	}
 }

@@ -1,18 +1,21 @@
+//#define XINPUT_CONTROL
+
 using UnityEngine;
 using System.Collections;
+
+#if XINPUT_CONTROL
 using XInputDotNetPure;
+#endif
 
 public class PlayerMovement : MonoBehaviour 
 {
-	//public GameObject frog;
 	private Animator anim;
-	private XInputControl inputControl;
+	private InputControl inputControl;
 
 	private bool moving = false;
 	public float movementSpeed = 5.0f;
 	private bool isMovementPaused = false;
-	//public bool movingHorizontally = false;
-	//public bool movingVertically = false;
+	private const float DPAD_GROUND = 0.95f;
 
 	enum Direction
 	{
@@ -24,19 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
 	Direction direction;
 
-	//Use ENUM 
-	/*int stateIdle = 0;
-	int stateUp = 1;
-	int stateDown = 2;
-	int stateLeft = 3;
-	int stateRight = 4;*/
 
-	public int currentState;
-	int oldState;
-
-
-	//float inputHor;
-	//float inputVert;
 
 	void awake () 
 	{
@@ -45,16 +36,17 @@ public class PlayerMovement : MonoBehaviour
 
 	void Start () 
 	{
-
 		anim = GetComponentInChildren<Animator>();
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
+#if XINPUT_CONTROL
 		//Update the controller states
 		inputControl.prevState = inputControl.state;
 		inputControl.state = GamePad.GetState(inputControl.playerIndex);
+#endif
 
 		//inputHor = Input.GetAxis ("Horizontal");
 		//inputVert = Input.GetAxis ("Vertical");
@@ -66,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
+#if XINPUT_CONTROL
 	void ApplyDirection ()
 	{
 		//set moving to false and if input is acquired set to true
@@ -126,71 +119,85 @@ public class PlayerMovement : MonoBehaviour
 			}
 			moving = true;
 		}
-	
-		/*//checks if moving in any direction
-		if ((_inputHor != 0) || (_inputVert != 0)) {
-			moving = true;
-		} 
-		else {
-			moving = false;
-		}
-
-		//checks if moving vertically
-		if (_inputVert != 0) {
-			movingVertically = true;
-			movingHorizontally = false;
-
-			//check if moving up
-				if(_inputVert > 0) {
-
-				facingLeft = false;
-				facingRight = false;
-				facingDown = false;
-				facingUp = true;
-			}
-			//check if moving up
-			if(_inputVert < 0) {
-
-				facingLeft = false;
-				facingRight = false;
-				facingDown = true;
-				facingUp = false;
-			}
-		} 
-		//not moving vertically
-		else {
-			movingVertically = false;
-		}
-
-		//checks if moving horizontally
-		if (_inputHor != 0) {
-			
-			movingHorizontally = true;
-			movingVertically = false;
-			//checks if moving right
-			if(_inputHor > 0) {
-				
-				facingLeft = false;
-				facingRight = true;
-				facingDown = false;
-				facingUp = false;
-			}
-			//checks if moving Left
-			if(_inputHor < 0) {
-				
-				facingLeft = true;
-				facingRight = false;
-				facingDown = false;
-				facingUp = false;
-	
-			}
-		}
-		//not moving horizontally
-		else 
-		{
-			movingHorizontally = false;
-		}*/
 	}
+#endif
+#if !XINPUT_CONTROL
+	void ApplyDirection ()
+	{
+		//set moving to false and if input is acquired set to true
+		moving = false;
+		//If up is pressed
+		bool up = UP ();
+		if (up) 
+		{
+			//and up was not getting pressed last update
+			if(!inputControl.prevState[3])
+			{
+				//and not already heading up
+				if(direction != Direction.UP)
+				{
+					direction = Direction.UP;
+				}
+			}
+			moving = true;
+		}
+		inputControl.prevState [3] = up;
+
+		//If down is pressed
+		bool down = DOWN ();
+		if (down) 
+		{
+			//and down was not getting pressed last update
+			if(!inputControl.prevState[0])
+			{
+				//and not already heading heading
+				if(direction != Direction.DOWN)
+				{
+					direction = Direction.DOWN;
+				}
+			}
+			moving = true;
+		}
+		inputControl.prevState [0] = down;
+
+		//If left is pressed
+		bool left = LEFT ();
+		if (left) 
+		{
+			//and left was not getting pressed last update
+			if(!inputControl.prevState[2])
+			{
+				//and not already heading left
+				if(direction != Direction.LEFT)
+				{
+					direction = Direction.LEFT;
+				}
+			}
+			moving = true;
+		}
+
+		inputControl.prevState [2] = left;
+		Debug.Log (left);
+
+		//If right is pressed
+		bool right = RIGHT();
+		if (right) 
+		{
+			//and right was not getting pressed last update
+			if(!inputControl.prevState[1])
+			{
+				//and not already heading right
+				if(direction != Direction.RIGHT)
+				{
+					direction = Direction.RIGHT;
+				}
+			}
+			moving = true;
+		}
+		inputControl.prevState [1] = right;
+
+	}
+#endif
 
 	void ApplyMovement () 
 	{
@@ -212,13 +219,6 @@ public class PlayerMovement : MonoBehaviour
 				break;
 			}
 		}
-		/*if (movingHorizontally == true) {
-			transform.Translate (movementSpeed * _inputHor * Time.deltaTime, 0.0f, 0.0f);
-		}
-		if (movingVertically == true) {
-			transform.Translate (0.0f, movementSpeed * _inputVert * Time.deltaTime, 0.0f);
-		}*/
-
 	}
 
 	void ApplyAnimations () 
@@ -263,27 +263,9 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	public void SetStartDirection()
-	{
-		if (UP (inputControl.state)) 
-		{
-			direction = Direction.UP;
-		}
-		if (DOWN (inputControl.state)) 
-		{
-			direction = Direction.DOWN;
-		}
-		if (LEFT (inputControl.state)) 
-		{
-			direction = Direction.LEFT;
-		}
-		if (RIGHT (inputControl.state)) 
-		{
-			direction = Direction.RIGHT;
-		}
 
-	}
 
+#if XINPUT_CONTROL
 	bool UP(GamePadState _state)
 	{
 		if (inputControl.isDpad) 
@@ -361,7 +343,126 @@ public class PlayerMovement : MonoBehaviour
 		return false;
 	}
 
-	public void SetInputControl(XInputControl _inputControl)
+	public void SetStartDirection()
+	{
+		if (UP (inputControl.state)) 
+		{
+			direction = Direction.UP;
+		}
+		if (DOWN (inputControl.state)) 
+		{
+			direction = Direction.DOWN;
+		}
+		if (LEFT (inputControl.state)) 
+		{
+			direction = Direction.LEFT;
+		}
+		if (RIGHT (inputControl.state)) 
+		{
+			direction = Direction.RIGHT;
+		}
+	}
+#endif
+#if !XINPUT_CONTROL
+	bool UP()
+	{
+		if (inputControl.isDpad) 
+		{
+			if (DPAD_GROUND < Input.GetAxis("dpady"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (Input.GetButton("Y"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	bool DOWN()
+	{
+		if (inputControl.isDpad) 
+		{
+			if (-DPAD_GROUND > Input.GetAxis("dpady"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (Input.GetButton("A"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	bool LEFT()
+	{
+		if (inputControl.isDpad) 
+		{
+			if (-DPAD_GROUND > Input.GetAxis("dpadx"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (Input.GetButton("X"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	bool RIGHT()
+	{
+		if (inputControl.isDpad) 
+		{
+			if (DPAD_GROUND < Input.GetAxis("dpadx"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		} 
+		else 
+		{
+			if (Input.GetButton("B"+inputControl.controllerIndex)) 
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void SetStartDirection()
+	{
+		if (UP ()) 
+		{
+			direction = Direction.UP;
+		}
+		if (DOWN ())
+		{
+			direction = Direction.DOWN;
+		}
+		if (LEFT ())
+		{
+			direction = Direction.LEFT;
+		}
+		if (RIGHT ())
+		{
+			direction = Direction.RIGHT;
+		}
+	}
+#endif
+
+	public void SetInputControl(InputControl _inputControl)
 	{
 		inputControl = _inputControl;
 	}
