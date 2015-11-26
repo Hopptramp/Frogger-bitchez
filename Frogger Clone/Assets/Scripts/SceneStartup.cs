@@ -30,6 +30,7 @@ public class SceneStartup : MonoBehaviour
 				for(int i = 0; i < NUM_OF_PLAYERS; ++i)
 				{
 					players[i].GetComponent<PlayerMovement> ().SetMovementIsPaused(false);
+					players[i].GetComponent<PlayerMovement> ().SetStartDirection();
 				}
 
 				hasGameBegun = true;
@@ -41,7 +42,7 @@ public class SceneStartup : MonoBehaviour
 	{
 		for (int i = 0; i < NUM_OF_PLAYERS; ++i) 
 		{
-			Vector3 spawnPoint = new Vector3((-5*NUM_OF_PLAYERS)+(i*NUM_OF_PLAYERS),0,0); //Algorithm to determine location of player
+			Vector3 spawnPoint = new Vector3((-NUM_OF_PLAYERS/2)+(i*NUM_OF_PLAYERS),0,0); //Algorithm to determine location of player
 			GameObject player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
 			player.GetComponent<PlayerMain>().SetupPlayer(i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().XInputPlayers[i]);
 			player.GetComponent<PlayerMovement>().SetMovementIsPaused(true);

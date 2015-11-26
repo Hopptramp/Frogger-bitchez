@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 	private XInputControl inputControl;
 
 	private bool moving = false;
-	private float movementSpeed = 5.0f;
+	public float movementSpeed = 5.0f;
 	private bool isMovementPaused = false;
 	//public bool movingHorizontally = false;
 	//public bool movingVertically = false;
@@ -45,7 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
 	void Start () 
 	{
-		anim = GetComponent<Animator>();
+
+		anim = GetComponentInChildren<Animator>();
 	}
 
 	// Update is called once per frame
@@ -260,6 +261,27 @@ public class PlayerMovement : MonoBehaviour
 				break;
 			}
 		}
+	}
+
+	public void SetStartDirection()
+	{
+		if (UP (inputControl.state)) 
+		{
+			direction = Direction.UP;
+		}
+		if (DOWN (inputControl.state)) 
+		{
+			direction = Direction.DOWN;
+		}
+		if (LEFT (inputControl.state)) 
+		{
+			direction = Direction.LEFT;
+		}
+		if (RIGHT (inputControl.state)) 
+		{
+			direction = Direction.RIGHT;
+		}
+
 	}
 
 	bool UP(GamePadState _state)
