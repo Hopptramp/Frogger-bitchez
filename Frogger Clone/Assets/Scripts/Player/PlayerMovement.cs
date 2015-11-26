@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using XInputDotNetPure;
 
 public class PlayerMovement : MonoBehaviour 
@@ -8,9 +9,17 @@ public class PlayerMovement : MonoBehaviour
 	private Animator anim;
 	private XInputControl inputControl;
 
-	private bool moving = false;
+
 	public float movementSpeed = 5.0f;
+	public float movingDistance = 0;
+	public float completeMoveDistance = 5.0f;
+
+	public bool completedMove = false;
+	private bool moving = false;
 	private bool isMovementPaused = false;
+	
+	public AudioClip moveSound1;
+	public AudioClip gameOverSound;
 	//public bool movingHorizontally = false;
 	//public bool movingVertically = false;
 
@@ -61,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
 		if(!isMovementPaused)
 		{
 			ApplyDirection ();
+			fullMove();
 			ApplyMovement ();
 			ApplyAnimations ();
 		}
@@ -196,6 +206,9 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (moving) 
 		{
+			if ( completedMove == true){
+			AudioSource.PlayClipAtPoint(moveSound1, transform.position);
+			}
 			switch(direction)
 			{
 			case Direction.UP:
@@ -371,5 +384,28 @@ public class PlayerMovement : MonoBehaviour
 		isMovementPaused = _b;
 	}
 
+	void fullMove() {
+
+		if (movingDistance == 0.0f) {
+			completedMove = true;
+		}
+		if (movingDistance <= completeMoveDistance && moving == true) {
+
+			completedMove = false;
+			movingDistance += movementSpeed * Time.deltaTime;
+		} 
+		else if(movingDistance > completeMoveDistance) {
+			movingDistance = 0;
+			completedMove = false;
+		}
+		else if (moving == false) {
+			movingDistance = 0;
+			completedMove = false;
+		} 
+		else {
+			movingDistance = 0;
+			completedMove = false;
+		} 
+	}
 
 }
