@@ -18,6 +18,7 @@ public class LevelTileManager : MonoBehaviour {
     //Size of world
     public int columns = 150;
     public int rows = 75;
+    public float mapScale = 1;
 
     //Objects to use as tiles, and ranges to place them in
     public List<GameObject> floorTile = new List<GameObject>();
@@ -96,7 +97,11 @@ public class LevelTileManager : MonoBehaviour {
             }
         }
         //Move mapholder to correct position
-        mapHolder.transform.position = new Vector3(- (columns / 2), -(rows / 2), 0f);
+        mapHolder.transform.position = new Vector3(- mapScale * (columns / 2) +(0.5f*mapScale), -mapScale*(rows / 2), 0f);
+        mapHolder.transform.localScale *=  mapScale;
+        GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
+        //Make sure camera orthographic size is set to half the row number in the inspector. Won't work properly here.
+        mainCam.GetComponent<Camera>().orthographicSize *= mapScale;
         
     }
 
