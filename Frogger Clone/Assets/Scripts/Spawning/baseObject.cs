@@ -22,7 +22,7 @@ public class baseObject : MonoBehaviour {
 		transform.localScale = new Vector3 (_struct.sizeX, _struct.sizeY, 1 );
 	}
 
-	public void assignParametersCroc(crocStruct _struct)
+	public void assignParametersCroc(CrocStruct _struct)
 	{
 		speedx = _struct.speedX;
 		speedz = _struct.speedY;

@@ -90,7 +90,7 @@ public class Spawner : MonoBehaviour
 			//instantiate croc
 			Croc = Instantiate(objectToSpawn[spawnWhat - 1], gameObject.transform.position, Quaternion.identity) as GameObject;
 			// find it's settings
-			crocStruct settingsCroc = GetComponent<crocStruct>();
+			CrocStruct settingsCroc = GetComponent<CrocStruct>();
 			// assign it's settings
 			Croc.GetComponent<baseObject>().assignParametersCroc(settingsCroc);
 			if(settingsCroc.speedX < 0)
@@ -111,7 +111,7 @@ public class Spawner : MonoBehaviour
 			//instantiate
 			CrocLeft = Instantiate(objectToSpawn[spawnWhat - 1], gameObject.transform.position, Quaternion.identity) as GameObject;
 			//find settings
-			crocStruct settingsCrocLeft = GetComponent<crocStruct>();
+			CrocStruct settingsCrocLeft = GetComponent<CrocStruct>();
 			//invert the speed
 			if(settingsCrocLeft.speedX > 0)
 			{
