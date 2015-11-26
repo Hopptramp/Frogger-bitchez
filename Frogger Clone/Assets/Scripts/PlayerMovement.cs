@@ -198,16 +198,16 @@ public class PlayerMovement : MonoBehaviour
 			switch(direction)
 			{
 			case Direction.UP:
-				transform.Translate (movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+				transform.Translate (0.0f, movementSpeed * Time.deltaTime, 0.0f);
 				break;
 			case Direction.DOWN:
-				transform.Translate (-movementSpeed * Time.deltaTime, 0.0f, 0.0f);
-				break;
-			case Direction.LEFT:
 				transform.Translate (0.0f, -movementSpeed * Time.deltaTime, 0.0f);
 				break;
+			case Direction.LEFT:
+				transform.Translate (-movementSpeed * Time.deltaTime, 0.0f, 0.0f);
+				break;
 			case Direction.RIGHT:
-				transform.Translate (0.0f, movementSpeed * Time.deltaTime, 0.0f);
+				transform.Translate (movementSpeed * Time.deltaTime, 0.0f, 0.0f);
 				break;
 			}
 		}

@@ -18,9 +18,9 @@ public class ControllerManager : MonoBehaviour
 	private int MAX_PLAYERS;
 	private int MAX_CONTROLLERS;
 	
-	private XInputControl[] XInputPlayers; //Contains up to date controller data including non active controllers
+	public XInputControl[] XInputPlayers; //Contains up to date controller data including non active controllers
 
-	private bool[] ready; //Contains the data that represents what players are ready
+	public bool[] ready; //Contains the data that represents what players are ready
 
 	public string nextScene;
 
@@ -77,6 +77,7 @@ public class ControllerManager : MonoBehaviour
 			//Master controller presses start to automatically begin game
 			if(XInputPlayers[0].state.Buttons.Start == ButtonState.Pressed)
 			{
+				OutputToConstantData();
 				Application.LoadLevel (nextScene);
 			}
 		}
