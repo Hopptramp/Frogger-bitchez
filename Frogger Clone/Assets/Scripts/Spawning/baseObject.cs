@@ -14,7 +14,15 @@ public class baseObject : MonoBehaviour {
 
 
 
-	public void assignParameters(logStructs _struct)
+	public void assignParametersLog(logStructs _struct)
+	{
+		speedx = _struct.speedX;
+		speedz = _struct.speedY;
+		
+		transform.localScale = new Vector3 (_struct.sizeX, _struct.sizeY, 1 );
+	}
+
+	public void assignParametersCroc(crocStruct _struct)
 	{
 		speedx = _struct.speedX;
 		speedz = _struct.speedY;
