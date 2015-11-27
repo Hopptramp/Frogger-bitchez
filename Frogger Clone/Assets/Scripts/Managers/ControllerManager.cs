@@ -36,6 +36,7 @@ public class ControllerManager : MonoBehaviour
 	private bool[] ready; //Contains the data that represents what players are ready
 
 	public string nextScene;
+	private GameObject visualDisplay;
 
 	// Use this for initialization
 	void Start () 
@@ -44,6 +45,7 @@ public class ControllerManager : MonoBehaviour
 		MAX_CONTROLLERS = MAX_PLAYERS / 2;
 		inputControllers = new InputControl[MAX_CONTROLLERS];
 		ready = new bool[MAX_PLAYERS];
+		visualDisplay = GameObject.Find ("VisualDisplay");
 
 #if !XINPUT_CONTROL
 		for(int i = 0; i < MAX_CONTROLLERS; ++i)
@@ -78,6 +80,7 @@ public class ControllerManager : MonoBehaviour
 						if(ready[i * 2] == false)
 						{
 							ready[i * 2] = true;
+							visualDisplay.GetComponent<JoinDisplay>().SetReadyDisplay(true, i * 2);
 						}
 					}
 				}
@@ -89,6 +92,7 @@ public class ControllerManager : MonoBehaviour
 						if(ready[(i * 2) + 1] == false)
 						{
 							ready[(i * 2) + 1] = true;
+							visualDisplay.GetComponent<JoinDisplay>().SetReadyDisplay(true, (i * 2)+1);
 						}
 					}
 				}
@@ -116,6 +120,7 @@ public class ControllerManager : MonoBehaviour
 				if(ready[i * 2] == false)
 				{
 					ready[i * 2] = true;
+					visualDisplay.GetComponent<JoinDisplay>().SetReadyDisplay(true, i * 2);
 				}
 			}
 			//If right shoulder button has being pressed and not ready
@@ -124,6 +129,7 @@ public class ControllerManager : MonoBehaviour
 				if(ready[(i * 2) + 1] == false)
 				{
 					ready[(i * 2) + 1] = true;
+					visualDisplay.GetComponent<JoinDisplay>().SetReadyDisplay(true, (i * 2) + 1);
 				}
 			}
 		}
