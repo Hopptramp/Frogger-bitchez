@@ -3,27 +3,25 @@ using System.Collections;
 
 public class playerCollision : MonoBehaviour 
 {
-	
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
+		// if the player has a parent
 		if (gameObject.transform.parent) 
 		{
+			// if the player is not on water
 			if (!GameObject.Find ("Managers").GetComponent<LevelTileManager> ().playerOnWater (gameObject)) 
 			{
+				// remove the parent
 				removeParent ();
 			}
 		}
 	}
 	
-	void OnTriggerStay2D(Collider2D coll)
+	void OnTriggerEnter2D(Collider2D coll)
 	{
+		// if the player is on water
 		if (GameObject.Find ("Managers").GetComponent<LevelTileManager> ().playerOnWater (gameObject))
 		{
 			// parenting the player to the logs
@@ -33,9 +31,22 @@ public class playerCollision : MonoBehaviour
 			}
 		}
 	}
+
+	// if the player steps off a log
+	void OnTriggerExit2D()
+	{
+		// if the player is on water
+		if (GameObject.Find ("Managers").GetComponent<LevelTileManager> ().playerOnWater (gameObject)) 
+		{
+			// send on the message the player is dead
+			//GetComponent<PlayerMain>().OnDeath(); 
+
+		}
+	}
+
 	
 	//
-	public void removeParent()
+	void removeParent()
 	{
 		// removing parent
 		gameObject.transform.parent = null;
