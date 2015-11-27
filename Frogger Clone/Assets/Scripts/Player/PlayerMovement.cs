@@ -216,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
 			switch(direction)
 			{
 			case Direction.UP:
-				OnDeath();
+				//OnDeath();
 				transform.Translate (0.0f, movementSpeed * Time.deltaTime, 0.0f);
 				break;
 			case Direction.DOWN:
@@ -379,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (inputControl.isDpad) 
 		{
-			if (DPAD_GROUND < Input.GetAxis("dpady"+inputControl.controllerIndex)) 
+			if (DPAD_GROUND < Input.GetAxisRaw	("dpady"+inputControl.controllerIndex)) 
 			{
 				return true;
 			}
@@ -399,7 +399,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (inputControl.isDpad) 
 		{
-			if (-DPAD_GROUND > Input.GetAxis("dpady"+inputControl.controllerIndex)) 
+			if (-DPAD_GROUND > Input.GetAxisRaw("dpady"+inputControl.controllerIndex)) 
 			{
 				return true;
 			}
@@ -418,7 +418,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (inputControl.isDpad) 
 		{
-			if (-DPAD_GROUND > Input.GetAxis("dpadx"+inputControl.controllerIndex)) 
+			if (-DPAD_GROUND > Input.GetAxisRaw("dpadx"+inputControl.controllerIndex)) 
 			{
 				return true;
 			}
@@ -437,7 +437,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (inputControl.isDpad) 
 		{
-			if (DPAD_GROUND < Input.GetAxis("dpadx"+inputControl.controllerIndex)) 
+			if (DPAD_GROUND < Input.GetAxisRaw("dpadx"+inputControl.controllerIndex)) 
 			{
 				return true;
 			}
