@@ -12,15 +12,17 @@ public class PlayerMovement : MonoBehaviour
 {
 	private Animator anim;
 	private InputControl inputControl;
+	public GameObject explosion;
 
 
 	public float movementSpeed = 5.0f;
-	public float completeMoveDistance = 1.0f;
+	public float completeMoveDistance = 3.09f;
 	public float movingDistance = 0.0f;
 
 	public bool completedMove = false;
 	private bool moving = false;
 	private bool isMovementPaused = false;
+
 
 	private const float DPAD_GROUND = 0.95f;
 	
@@ -44,8 +46,6 @@ public class PlayerMovement : MonoBehaviour
 
 	void Start () 
 	{
-
-		completeMoveDistance = movementSpeed;
 		anim = GetComponentInChildren<Animator>();
 	}
 
@@ -216,6 +216,7 @@ public class PlayerMovement : MonoBehaviour
 			switch(direction)
 			{
 			case Direction.UP:
+				OnDeath();
 				transform.Translate (0.0f, movementSpeed * Time.deltaTime, 0.0f);
 				break;
 			case Direction.DOWN:
@@ -480,6 +481,10 @@ public class PlayerMovement : MonoBehaviour
 	public void SetMovementIsPaused(bool _b)
 	{
 		isMovementPaused = _b;
+	}
+	void OnDeath()
+	{
+		Instantiate(explosion, gameObject.transform.position , Quaternion.identity);
 	}
 	void audioLoop()
 	{
