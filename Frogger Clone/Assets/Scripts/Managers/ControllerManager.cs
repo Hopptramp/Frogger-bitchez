@@ -105,8 +105,10 @@ public class ControllerManager : MonoBehaviour
 			//Master controller presses start to automatically begin game
 			if(inputControllers[0].state.Buttons.Start == ButtonState.Pressed)
 			{
-				OutputToConstantData();
-				Application.LoadLevel (nextScene);
+				if(AtLeastOnePlayer())
+				{
+					NextLevel();
+				}
 			}
 		}
 #endif
@@ -137,8 +139,10 @@ public class ControllerManager : MonoBehaviour
 		//If master controller is connected
 		if(Input.GetButtonDown("start1"))
 		{
-			OutputToConstantData();
-			Application.LoadLevel (nextScene);
+			if(AtLeastOnePlayer())
+			{
+				NextLevel();
+			}
 		}
 #endif
 
@@ -197,5 +201,23 @@ public class ControllerManager : MonoBehaviour
 
 		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().SetupInputControl (activePlayers, inputControllers, ready);
 
+	}
+
+	public bool AtLeastOnePlayer()
+	{
+		for (int i = 0; i < MAX_PLAYERS; ++i) 
+		{
+			if(ready[i]==true)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void NextLevel()
+	{
+		OutputToConstantData();
+		Application.LoadLevel (nextScene);
 	}
 }
