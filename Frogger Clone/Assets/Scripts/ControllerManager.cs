@@ -17,10 +17,12 @@ public struct InputControl
 	public GamePadState prevState;
 	public PlayerIndex playerIndex;
 #endif
-
-	public bool isDpad; //Means nothing till process by constant data
+#if !XINPUT_CONTROL
 	public int controllerIndex;
 	public bool[] prevState;
+#endif
+	public bool isDpad; //Means nothing till process by constant data
+
 }
 
 public class ControllerManager : MonoBehaviour 
