@@ -24,9 +24,11 @@ public class PlayerManager : MonoBehaviour
 		NUM_OF_PLAYERS = _numPlayers;
 		players = new GameObject[NUM_OF_PLAYERS];
 
+		//Get assist values that will spawn the players in the correct position
 		int WIDTH = GetComponent<LevelTileManager>().columns / 2;
 		int HEIGHT = GetComponent<LevelTileManager>().rows;
-		
+
+		//Multiplier to determine how far left or right along the screen to spawn the player
 		int multiplier;
 		if(NUM_OF_PLAYERS < 2)
 		{
@@ -37,15 +39,19 @@ public class PlayerManager : MonoBehaviour
 			multiplier = (WIDTH - (WIDTH/10)) / (int)Mathf.Ceil((float)NUM_OF_PLAYERS/2);
 		}
 
+		//Setup each player
 		for (int i = 0; i < NUM_OF_PLAYERS; ++i) 
 		{
-			Vector3 spawnPoint = new Vector3((((-NUM_OF_PLAYERS/2)+ i + 0.5f)*multiplier),-HEIGHT/2,0); //Algorithm to determine location of player
+			//Algorithm to determine location of player
+			Vector3 spawnPoint = new Vector3((((-NUM_OF_PLAYERS/2)+ i + 0.5f)*multiplier),-HEIGHT/2,0); 
+			//Instantiate and set starting parameters of player
 			players[i] = Instantiate(playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
 			players[i].GetComponent<PlayerMain>().SetupPlayer(i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().inputControllers[i]);
 			players[i].GetComponent<PlayerMovement>().SetMovementIsPaused(true);
 		}
 	}
 
+	//Enables and players and sets initial direction movement
 	public void PlayersStart()
 	{
 		for(int i = 0; i < NUM_OF_PLAYERS; ++i)
@@ -59,4 +65,9 @@ public class PlayerManager : MonoBehaviour
 	{
 		return players;
 	}	
+
+	public void KillPlayer(int _player)
+	{
+		players [_player].GetComponent<PlayerMain> ().OnDeath ();
+	}
 }
