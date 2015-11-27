@@ -213,6 +213,41 @@ public class LevelTileManager : MonoBehaviour {
         
     }
 
+	//check if the player is on water
+	public bool playerOnWater(GameObject _player)
+	{
+		float playerPos = (_player.transform.position.y) + 37;
+		intPair bridge;
+		bridge.top = 1;
+		bridge.bottom = 1;
+		
+		foreach (intPair floats in waterBounds) 
+		{	
+			foreach (intPair roads in roadBounds)
+			{
+				if (roads.bottom > floats.bottom && roads.top < floats.top)
+				{
+					bridge.top = roads.top;
+					bridge.bottom = roads.bottom;
+				}
+			}
+		}
+		
+		foreach (intPair floats in waterBounds) 
+		{
+			if (playerPos >= floats.bottom && playerPos <= floats.top) 
+			{
+				if (playerPos >= bridge.top || playerPos + 1 <= bridge.bottom)
+				{
+					// you are on water
+					return true;
+				}
+			}
+		}
+		//you are not on water
+		return false;
+	}
+
 
     // Use this for initialization
     void Start()
