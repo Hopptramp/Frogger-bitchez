@@ -8,27 +8,29 @@ public class LevelTileManager : MonoBehaviour {
 
     //For storing bound pairs.
     [System.Serializable]
-    public struct floatPair
+    public struct intPair
     {
         public float top, bottom;
     }
-
-
-
+    
     //Size of world
     public int columns = 150;
     public int rows = 75;
     public float mapScale = 1;
 
-    //Objects to use as tiles, and ranges to place them in
+    //Objects to use as tiles
     public List<GameObject> floorTile = new List<GameObject>();
     public List<GameObject> waterTile = new List<GameObject>();
     public GameObject roadTile;
+    
 
+    //Spawner object
     public GameObject aSpawner;
+    public GameObject destructionBox;
 
-    public List <floatPair> waterBounds = new List<floatPair>();
-    public List <floatPair> roadBounds = new List<floatPair>();
+    //Ranges for tiles
+    public List <intPair> waterBounds = new List<intPair>();
+    public List <intPair> roadBounds = new List<intPair>();
     
     
 
@@ -47,6 +49,44 @@ public class LevelTileManager : MonoBehaviour {
             for (int y = 0; y< rows; y++)
             {
                 gridPositions.Add(new Vector3(x, y, 0f));
+            }
+        }
+    }
+    
+    void Validate()
+    {
+        for(int i = 0;i < waterBounds.Count; i++)
+        {
+            if (waterBounds[i].bottom < 3)
+            {
+                intPair temp = waterBounds[i];
+                temp.bottom = 3;
+                waterBounds[i] = temp;
+
+            }
+            if (waterBounds[i].top > rows -  5)
+            {
+                intPair temp = waterBounds[i];
+                temp.top = rows - 5;
+                waterBounds[i] = temp;
+
+            }
+        }
+        for (int i = 0; i < roadBounds.Count; i++)
+        {
+            if (roadBounds[i].bottom < 3)
+            {
+                intPair temp = roadBounds[i];
+                temp.bottom = 3;
+                roadBounds[i] = temp;
+
+            }
+            if (roadBounds[i].top > rows - 5)
+            {
+                intPair temp = roadBounds[i];
+                temp.top = rows - 5;
+                roadBounds[i] = temp;
+
             }
         }
     }
@@ -69,21 +109,23 @@ public class LevelTileManager : MonoBehaviour {
 
 
                 // Check if tile is between any pair of bounding values, and chnage to instantiate accordingly
-                foreach (floatPair floats in waterBounds)
+                foreach (intPair ints in waterBounds)
                 {
 
-                    if (y >= floats.bottom && y <= floats.top)
+                    if (y >= ints.bottom && y <= ints.top)
                     {
-                        toInstantiate = waterTile[Random.Range(0, waterTile.Count)];
+                        toInstantiate = waterTile[Random.Range(0, waterTile.Count)];                        
+                                               
                     }
                 }
-                foreach (floatPair floats in roadBounds)
+                foreach (intPair ints in roadBounds)
                 {
-                    if (y >= floats.bottom && y <= floats.top)
+                    if (y >= ints.bottom && y <= ints.top)
                     {
                         toInstantiate = roadTile;
                     }
                 }
+                
 
                 //---------------------------------------------------------------------------//
 
@@ -99,36 +141,69 @@ public class LevelTileManager : MonoBehaviour {
             }
         }
 
+
+        // for all areas that are water or roads, place spawners.
         for (int y = 0; y < rows; y++)
         {
+
             Vector3 spawnerPos = Vector3.zero;
-            int toSpawn = 0;
-            foreach (floatPair floats in waterBounds)
+            bool waterSpawn = false;
+            bool moveLeft = false;
+            foreach (intPair floats in waterBounds)
             {
 
                 if (y >= floats.bottom && y <= floats.top)
                 {
-                    spawnerPos = new Vector3(-3,y,-0.2f);
-                    toSpawn = 1;
+                    if (Random.value <= 0.5f)
+                    {
+                        spawnerPos = new Vector3(columns + 2, y, 0);
+                        moveLeft = true;
+                    }
+                    else
+                    {
+                        spawnerPos = new Vector3(-3, y, 0);
+                        moveLeft = false;
+                    }
+                    waterSpawn = true;
                 }
             }
-            foreach (floatPair floats in roadBounds)
+            foreach (intPair floats in roadBounds)
             {
                 if (y >= floats.bottom && y <= floats.top)
                 {
-                    spawnerPos = new Vector3(columns + 2, y, -0.2f);
-                    toSpawn = 2;
+                    if (Random.value <= 0.5f)
+                    {
+                        spawnerPos = new Vector3(columns + 2, y, 0);
+                        moveLeft = true;
+                    }
+                    else
+                    {
+                        spawnerPos = new Vector3(-3, y, 0);
+                        moveLeft = false;
+                    }
+                    waterSpawn = false;
+                    
                 }
             }
+            
             if (spawnerPos != Vector3.zero)
             {
+                //If a position for a spawner has been designated, then instantiate it and pass in the mapscale.
                 GameObject spawnerInstance = Instantiate(aSpawner, spawnerPos, Quaternion.identity) as GameObject;
-                spawnerInstance.GetComponent<Spawner>().spawnWhat = toSpawn;
-                spawnerInstance.GetComponent<Spawner>().logStats.sizeX *= mapScale;
-                spawnerInstance.GetComponent<Spawner>().logStats.sizeY *= mapScale;
+                spawnerInstance.GetComponent<Spawner>().onWater = waterSpawn;
+                spawnerInstance.GetComponent<Spawner>().moveLeft = moveLeft; 
+                spawnerInstance.GetComponent<Spawner>().mapScale = mapScale;
+                //Parent spawners to the map
                 spawnerInstance.transform.SetParent(mapHolder);
             }
         }
+        GameObject leftBox = Instantiate(destructionBox, new Vector3(-6, rows/2 ,0), Quaternion.identity) as GameObject;
+        leftBox.transform.localScale = new Vector3 (1,rows,1);
+        leftBox.transform.parent = mapHolder;
+        GameObject rightBox = Instantiate(destructionBox, new Vector3(columns + 5, rows / 2, 0), Quaternion.identity) as GameObject;
+        rightBox.transform.localScale = new Vector3(1, rows, 1);
+        rightBox.transform.parent = mapHolder;
+
         //Move mapholder to correct position
         mapHolder.transform.position = new Vector3(- mapScale * (columns / 2) +(0.5f*mapScale), -mapScale*(rows / 2), 0f);
         mapHolder.transform.localScale *=  mapScale;
@@ -142,6 +217,7 @@ public class LevelTileManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        Validate();
         InitialiseList();
         MapSetup();
 
