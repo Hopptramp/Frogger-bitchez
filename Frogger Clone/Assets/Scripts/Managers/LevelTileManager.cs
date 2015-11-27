@@ -216,7 +216,7 @@ public class LevelTileManager : MonoBehaviour {
 	//check if the player is on water
 	public bool playerOnWater(GameObject _player)
 	{
-		float playerPos = (_player.transform.position.y) + 37;
+		float playerPos = (_player.transform.position.y) + (rows/2)+ 1;
 		intPair bridge;
 		bridge.top = 1;
 		bridge.bottom = 1;
@@ -237,7 +237,7 @@ public class LevelTileManager : MonoBehaviour {
 		{
 			if (playerPos >= floats.bottom && playerPos <= floats.top) 
 			{
-				if (playerPos >= bridge.top || playerPos + 1 <= bridge.bottom)
+				if (playerPos >= bridge.top || playerPos <= bridge.bottom)
 				{
 					// you are on water
 					return true;
