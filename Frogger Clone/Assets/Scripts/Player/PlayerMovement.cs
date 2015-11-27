@@ -21,9 +21,9 @@ public class PlayerMovement : MonoBehaviour
 	public float movingDistance = 0.0f;
 
 	public bool completedMove = false;
-	private bool moving = false;
+	public bool moving = false;
 	private bool isMovementPaused = false;
-
+	public bool isAlive = true;
 
 	private const float DPAD_GROUND = 0.95f;
 	
@@ -211,7 +211,9 @@ public class PlayerMovement : MonoBehaviour
 
 	void ApplyMovement () 
 	{
-		if (moving) 
+		if (isAlive == false) {
+		}
+		else if (moving) 
 		{
 
 			switch(direction)
@@ -486,13 +488,18 @@ public class PlayerMovement : MonoBehaviour
 	public void OnDeath()
 	{
 		Destroy (Instantiate(explosion, gameObject.transform.position , Quaternion.identity), explosionLifetime);
-		GameObject sprite = transform.Find ("Sprite").gameObject; 
-		sprite.SetActive (false);
+		//isAlive = false;
+		SoundManager.instance.RandomizeSfx(gameOverSound);
+		//GameObject sprite = transform.Find ("Sprite").gameObject; 
+		//sprite.SetActive (false);
+		gameObject.SetActive(false);
 	}
 	void audioLoop()
 	{
 		//if (moving == true) {
-		if (movingDistance >= completeMoveDistance -0.01) 
+		if (isAlive == false) {
+		}
+		else if (movingDistance >= completeMoveDistance -0.01) 
 		{
 			//AudioSource.PlayClipAtPoint (moveSound1, transform.position);
 			SoundManager.instance.RandomizeSfx(moveSound1);
