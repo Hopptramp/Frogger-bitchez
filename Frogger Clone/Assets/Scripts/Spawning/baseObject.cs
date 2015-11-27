@@ -19,12 +19,13 @@ public class baseObject : MonoBehaviour {
 
     }
 
-	public void assignParameters(statsStruct _struct)
+	public void assignParameters(statsStruct _struct, float _mapScale)
 	{
-		speedx = _struct.speedX;
+		speedx = _struct.speedX * _mapScale;
 		speedz = _struct.speedY;
 		
-		transform.localScale = new Vector3 (_struct.sizeX, _struct.sizeY, 1 );
+		transform.localScale = new Vector3 (_struct.sizeX * _mapScale, _struct.sizeY *_mapScale, 1 );
+
 	}
     
 
