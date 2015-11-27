@@ -12,6 +12,7 @@ public class PlayerMain : MonoBehaviour
 {
 	private int playerNumber;
 	private InputControl inputControl;
+	private bool isAlive = true;
 
 	// Use this for initialization
 	void Start () 
@@ -35,5 +36,12 @@ public class PlayerMain : MonoBehaviour
 		GetComponent<PlayerMovement> ().SetInputControl (inputControl);
 	}
 
-
+	public void OnDeath()
+	{
+		if (isAlive == true) 
+		{
+			isAlive = false;
+			//GetComponent<PlayerMovement> ().OnDeath ();
+		}
+	}
 }

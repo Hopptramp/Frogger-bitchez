@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 	private Animator anim;
 	private InputControl inputControl;
 	public GameObject explosion;
+	public float explosionLifetime = 1.0f;
 
 
 	public float movementSpeed = 5.0f;
@@ -482,9 +483,11 @@ public class PlayerMovement : MonoBehaviour
 	{
 		isMovementPaused = _b;
 	}
-	void OnDeath()
+	public void OnDeath()
 	{
-		Instantiate(explosion, gameObject.transform.position , Quaternion.identity);
+		Destroy (Instantiate(explosion, gameObject.transform.position , Quaternion.identity), explosionLifetime);
+		GameObject sprite = transform.Find ("Sprite").gameObject; 
+		sprite.SetActive (false);
 	}
 	void audioLoop()
 	{
