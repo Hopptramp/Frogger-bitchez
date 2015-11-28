@@ -35,10 +35,12 @@ public class PlayerMovement : MonoBehaviour
 		UP = 0,
 		DOWN,
 		LEFT,
-		RIGHT
+		RIGHT,
+		MAX_DIRECTIONS
 	}
 
-	Direction direction;
+	private Direction direction;
+	private bool applyDirectionAgain = false;
 
 	void awake () 
 	{
@@ -134,92 +136,77 @@ public class PlayerMovement : MonoBehaviour
 #if !XINPUT_CONTROL
 	void ApplyDirection ()
 	{
+		applyDirectionAgain = false;
 		//set moving to false and if input is acquired set to true
 		moving = false;
+
 		//If up is pressed
 		bool up = UP ();
-		if (up) 
-		{
-			//and up was not getting pressed last update
-			if(!inputControl.prevState[3])
-			{
-				//and not already heading up
-				if(direction != Direction.UP)
-				{
-					direction = Direction.UP;
-				}
-			}
-			moving = true;
-		}
-		inputControl.prevState [3] = up;
-
+		CheckDirection (up, Direction.UP);
+	
 		//If down is pressed
 		bool down = DOWN ();
-		if (down) 
-		{
-			//and down was not getting pressed last update
-			if(!inputControl.prevState[0])
-			{
-				//and not already heading heading
-				if(direction != Direction.DOWN)
-				{
-					direction = Direction.DOWN;
-				}
-			}
-			moving = true;
-		}
-		inputControl.prevState [0] = down;
+		CheckDirection (down, Direction.DOWN);
 
 		//If left is pressed
 		bool left = LEFT ();
-		if (left) 
-		{
-			//and left was not getting pressed last update
-			if(!inputControl.prevState[2])
-			{
-				//and not already heading left
-				if(direction != Direction.LEFT)
-				{
-					direction = Direction.LEFT;
-				}
-			}
-			moving = true;
-		}
-
-		inputControl.prevState [2] = left;
-		Debug.Log (left);
+		CheckDirection (left, Direction.LEFT);
 
 		//If right is pressed
 		bool right = RIGHT();
-		if (right) 
+		CheckDirection (right, Direction.RIGHT);	
+
+		if (applyDirectionAgain) 
 		{
-			//and right was not getting pressed last update
-			if(!inputControl.prevState[1])
+			ApplyDirection ();
+		}
+	}
+
+	void CheckDirection(bool _pressed, Direction _direction)
+	{
+		//If button is getting pressed
+		if (_pressed) 
+		{
+			//and was not getting pressed last update
+			if(!inputControl.prevState[(int)_direction])
 			{
-				//and not already heading right
-				if(direction != Direction.RIGHT)
+				//and not already heading in that direction
+				if(direction != _direction)
 				{
-					direction = Direction.RIGHT;
+					direction = _direction;
 				}
 			}
 			moving = true;
 		}
-		inputControl.prevState [1] = right;
-
+		//If button is not getting pressed
+		else 
+		{
+			//But still heading in that direction
+			if (direction == _direction) 
+			{
+				//Set to general direction
+				direction = Direction.MAX_DIRECTIONS;
+				//Reset the previous states
+				for(int i = 0; i < (int)Direction.MAX_DIRECTIONS; ++i)
+				{
+					inputControl.prevState[i] = false;
+				}
+				//Test to find new direction
+				applyDirectionAgain = true;
+			}
+		}
+		
+		inputControl.prevState [(int)_direction] = _pressed;
 	}
 #endif
 
 	void ApplyMovement () 
 	{
-		if (isAlive == false) {
-		}
-		else if (moving) 
+		if (moving) 
 		{
-
 			switch(direction)
 			{
 			case Direction.UP:
-				//OnDeath();
 				transform.Translate (0.0f, movementSpeed * Time.deltaTime, 0.0f);
 				break;
 			case Direction.DOWN:
