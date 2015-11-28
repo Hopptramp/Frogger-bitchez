@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -221,7 +221,7 @@ public class LevelTileManager : MonoBehaviour
 
 
         // for all areas that are water or roads, place spawners.
-        for (int y = 0; y < rows; y++)
+        /*for (int y = 0; y < rows; y++)
         {
 
             Vector3 spawnerPos = Vector3.zero;
@@ -262,23 +262,35 @@ public class LevelTileManager : MonoBehaviour
                     waterSpawn = false;
                     
                 }
-            }
+            }*/
+
+			//For every grouping of two rows place a spawner
+			for(int i = 0; i < rows; ++i)
+			{
+				switch(tileStructure[i])
+				{
+				case TileTypes.WATER:
+					SetupSpawner(i + 0.5f, tileStructure[i]);
+					++i;
+					break;
+				case TileTypes.ROAD:
+					SetupSpawner(i + 0.5f, tileStructure[i]);
+					++i;
+					break;
+				}
+			}
             
-            if (spawnerPos != Vector3.zero)
-            {
-                //If a position for a spawner has been designated, then instantiate it and pass in the mapscale.
-                GameObject spawnerInstance = Instantiate(aSpawner, spawnerPos, Quaternion.identity) as GameObject;
-                spawnerInstance.GetComponent<Spawner>().onWater = waterSpawn;
-                spawnerInstance.GetComponent<Spawner>().moveLeft = moveLeft; 
-                spawnerInstance.GetComponent<Spawner>().mapScale = mapScale;
-                //Parent spawners to the map
-                spawnerInstance.transform.SetParent(mapHolder);
-            }
-        }
-        GameObject leftBox = Instantiate(destructionBox, new Vector3(-6, rows/2 ,0), Quaternion.identity) as GameObject;
+            //if (spawnerPos != Vector3.zero)
+           // {
+				
+            //}
+        //}
+
+		//Instantiate death box for objects !!!Needs to be configured as to not delete the larger spawned objects immediately
+        GameObject leftBox = Instantiate(destructionBox, new Vector3(-18, rows/2 ,0), Quaternion.identity) as GameObject;
         leftBox.transform.localScale = new Vector3 (1,rows,1);
         leftBox.transform.parent = mapHolder;
-        GameObject rightBox = Instantiate(destructionBox, new Vector3(columns + 5, rows / 2, 0), Quaternion.identity) as GameObject;
+        GameObject rightBox = Instantiate(destructionBox, new Vector3(columns + 17, rows / 2, 0), Quaternion.identity) as GameObject;
         rightBox.transform.localScale = new Vector3(1, rows, 1);
         rightBox.transform.parent = mapHolder;
 
@@ -291,6 +303,79 @@ public class LevelTileManager : MonoBehaviour
         
     }
 
+	void SetupSpawner(float _yPos, TileTypes _type)
+	{
+		//Determine spawner position !!!Needs to be altered as larger objects pop onto screen
+		Vector3 spawnerPos;
+		Spawner.SpawnDirection dir;
+		if (Random.value <= 0.5f)
+		{
+			spawnerPos = new Vector3(columns + 2, _yPos, 0);
+			dir = Spawner.SpawnDirection.LEFT;
+		}
+		else
+		{
+			spawnerPos = new Vector3(-3, _yPos, 0);
+			dir = Spawner.SpawnDirection.RIGHT;
+		}
+
+		//If a position for a spawner has been designated, then instantiate it and pass in the mapscale.
+		GameObject spawnerInstance = Instantiate(aSpawner, spawnerPos, Quaternion.identity) as GameObject;
+		Spawner spawner = spawnerInstance.GetComponent<Spawner>();
+
+		
+		// spawnerInstance.GetComponent<Spawner>().onWater = waterSpawn;
+		// spawnerInstance.GetComponent<Spawner>().moveLeft = moveLeft;
+
+		//The types of things that can be spawned on each tile type
+		switch(_type)
+		{
+		case TileTypes.WATER:
+			//Can spawn 1 type of object
+			spawner.SetupSpawnerBasics(1, mapScale, dir);
+			//Random variation for what objects to use
+			float rand = Random.value;
+			if(rand <= 0.3)
+			{
+				spawner.SetupSpawnableObject(ObjectType.SMALL_LOG);
+			}
+			else if(rand <= 0.7)
+			{
+				spawner.SetupSpawnableObject(ObjectType.MEDIUM_LOG);
+			}
+			else
+			{
+				spawner.SetupSpawnableObject(ObjectType.BIG_LOG);
+			}
+			break;
+		case TileTypes.ROAD:
+			spawner.SetupSpawnerBasics(2, mapScale, dir);
+			float rand2 = Random.value;
+			if(rand2 <= 0.3)
+			{
+				spawner.SetupSpawnableObject(ObjectType.CAR1);
+				spawner.SetupSpawnableObject(ObjectType.CAR2);
+			}
+			else if(rand2 <= 0.7)
+			{
+				spawner.SetupSpawnableObject(ObjectType.CAR3);
+				spawner.SetupSpawnableObject(ObjectType.CAR2);
+			}
+			else
+			{
+				spawner.SetupSpawnableObject(ObjectType.CAR2);
+				spawner.SetupSpawnableObject(ObjectType.CAR3);
+			}
+			break;
+		}
+
+		//spawner.mapScale = mapScale;
+		//spawner.SetupDirection(dir);
+
+		//Parent spawners to the map
+		spawnerInstance.transform.SetParent(mapHolder);
+	}
+
 	public TileTypes TileAtPosition(int _position)
 	{
 		return tileStructure [_position];
@@ -298,6 +383,7 @@ public class LevelTileManager : MonoBehaviour
 
 	public bool PositionOnTile(int _position, TileTypes _tile)
 	{
+		_position = Mathf.RoundToInt(_position + (rows/2) + 1);
 		if (tileStructure [_position] == _tile) 
 		{
 			return true;
@@ -307,8 +393,8 @@ public class LevelTileManager : MonoBehaviour
 
 	public bool ObjectOnTile(GameObject _object, TileTypes _tile)
 	{
-		float objectPos = (_object.transform.position.y) + (rows/2)+ 1;
-		if (tileStructure [(int)objectPos] == _tile) 
+		int objectPos = Mathf.RoundToInt((_object.transform.position.y) + (rows/2) + 1);
+		if (tileStructure [objectPos] == _tile) 
 		{
 			return true;
 		}

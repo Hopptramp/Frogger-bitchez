@@ -13,6 +13,7 @@ public class playerCollision : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		Debug.Log (tileMan.TileAtPosition ((int)(transform.position.y+((75/2)+1))).ToString ());
 		// if the player has a parent
 		if (gameObject.transform.parent) 
 		{
@@ -25,16 +26,33 @@ public class playerCollision : MonoBehaviour
 		}
 	}
 	
-	void OnTriggerEnter2D(Collider2D coll)
+	void OnTriggerEnter2D(Collider2D col)
 	{
-		//Need to also test that is a carrying object and not an impact object
-		// if the player is on water
-		if (tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER))
+		// parenting the player to the logs
+		if (col.gameObject.tag == "Platform") 
 		{
-			// parenting the player to the logs
-			if (coll.gameObject.tag == "Platform") 
+			if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
 			{
-				gameObject.transform.SetParent (coll.gameObject.transform);
+				gameObject.transform.SetParent (col.gameObject.transform);
+			}
+		}
+	}
+
+	//Needed to get on the initial platform as you can collide with log before being officially on a water tile then trigger enter isn't called
+	void OnTriggerStay2D(Collider2D col)
+	{
+		//If a platform
+		if (col.gameObject.tag == "Platform") 
+		{
+			//And not already parented to something
+			if (!gameObject.transform.parent) 
+			{
+				//And on a water tile
+				if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
+				{
+					//Parent to object
+					gameObject.transform.SetParent (col.gameObject.transform);
+				}
 			}
 		}
 	}
