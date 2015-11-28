@@ -6,6 +6,16 @@ using Random = UnityEngine.Random;
 
 public class LevelTileManager : MonoBehaviour
 {
+	public enum TileTypes
+	{
+		PLAIN = 0,
+		WATER,
+		ROAD,
+		ALL_TYPES
+	}
+
+	private TileTypes[] tileStructure;
+
 	public int bottomBound = 3;
 	public int topBound = 5;
 
@@ -179,11 +189,10 @@ public class LevelTileManager : MonoBehaviour
                 // Check if tile is between any pair of bounding values, and chnage to instantiate accordingly
                 foreach (intPair ints in waterBounds)
                 {
-
                     if (y >= ints.bottom && y <= ints.top)
                     {
-                        toInstantiate = waterTile[Random.Range(0, waterTile.Count)];                        
-                                               
+                        toInstantiate = waterTile[Random.Range(0, waterTile.Count)];   
+						tileStructure[y] = TileTypes.WATER;
                     }
                 }
                 foreach (intPair ints in roadBounds)
@@ -191,6 +200,7 @@ public class LevelTileManager : MonoBehaviour
                     if (y >= ints.bottom && y <= ints.top)
                     {
                         toInstantiate = roadTile;
+						tileStructure[y] = TileTypes.ROAD;
                     }
                 }
                 
@@ -281,14 +291,39 @@ public class LevelTileManager : MonoBehaviour
         
     }
 
-	//check if the player is on water
-	public bool playerOnWater(GameObject _player)
+	public TileTypes TileAtPosition(int _position)
+	{
+		return tileStructure [_position];
+	}
+
+	public bool PositionOnTile(int _position, TileTypes _tile)
+	{
+		if (tileStructure [_position] == _tile) 
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public bool ObjectOnTile(GameObject _object, TileTypes _tile)
+	{
+		float objectPos = (_object.transform.position.y) + (rows/2)+ 1;
+		if (tileStructure [(int)objectPos] == _tile) 
+		{
+			return true;
+		}
+		return false;
+	}
+
+
+	/*//check if the player is on water
+	public bool playerOnWater(GameObject _player, )
 	{
 		float playerPos = (_player.transform.position.y) + (rows/2)+ 1;
 		intPair bridge;
 		bridge.top = 1;
 		bridge.bottom = 1;
-		
+
 		foreach (intPair floats in waterBounds) 
 		{	
 			foreach (intPair roads in roadBounds)
@@ -314,12 +349,13 @@ public class LevelTileManager : MonoBehaviour
 		}
 		//you are not on water
 		return false;
-	}
+	}*/
 
 
     // Use this for initialization
     void Start()
     {
+		tileStructure = new TileTypes[rows];
         Validate();
         InitialiseList();
         MapSetup();

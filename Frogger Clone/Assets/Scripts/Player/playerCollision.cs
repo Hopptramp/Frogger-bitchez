@@ -3,6 +3,12 @@ using System.Collections;
 
 public class playerCollision : MonoBehaviour 
 {
+	private LevelTileManager tileMan;
+
+	void Start()
+	{
+		tileMan = GameObject.Find ("Managers").GetComponent<LevelTileManager> ();
+	}
 
 	// Update is called once per frame
 	void Update () 
@@ -11,7 +17,7 @@ public class playerCollision : MonoBehaviour
 		if (gameObject.transform.parent) 
 		{
 			// if the player is not on water
-			if (!GameObject.Find ("Managers").GetComponent<LevelTileManager> ().playerOnWater (gameObject)) 
+			if (!tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER)) 
 			{
 				// remove the parent
 				removeParent ();
@@ -21,8 +27,9 @@ public class playerCollision : MonoBehaviour
 	
 	void OnTriggerEnter2D(Collider2D coll)
 	{
+		//Need to also test that is a carrying object and not an impact object
 		// if the player is on water
-		if (GameObject.Find ("Managers").GetComponent<LevelTileManager> ().playerOnWater (gameObject))
+		if (tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER))
 		{
 			// parenting the player to the logs
 			if (coll.gameObject.tag == "Platform") 
@@ -35,8 +42,9 @@ public class playerCollision : MonoBehaviour
 	// if the player steps off a log
 	void OnTriggerExit2D()
 	{
+		//Need to also test that is a carrying object and not an impact object
 		// if the player is on water
-		if (GameObject.Find ("Managers").GetComponent<LevelTileManager> ().playerOnWater (gameObject)) 
+		if (tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER)) 
 		{
 			// send on the message the player is dead
 			//GetComponent<PlayerMain>().OnDeath(); 
