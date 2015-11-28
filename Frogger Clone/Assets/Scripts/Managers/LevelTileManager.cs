@@ -4,13 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-public class LevelTileManager : MonoBehaviour {
+public class LevelTileManager : MonoBehaviour
+{
+	public int bottomBound = 3;
+	public int topBound = 5;
 
     //For storing bound pairs.
     [System.Serializable]
     public struct intPair
     {
-        public float top, bottom;
+        public int top, bottom;
     }
     
     //Size of world
@@ -52,44 +55,109 @@ public class LevelTileManager : MonoBehaviour {
             }
         }
     }
+
+	bool IsEven(int _number)
+	{
+		if (_number % 2 == 0) 
+		{
+			return true;
+		}
+		return false;
+	}
     
     void Validate()
     {
-        for(int i = 0;i < waterBounds.Count; i++)
-        {
-            if (waterBounds[i].bottom < 3)
-            {
-                intPair temp = waterBounds[i];
-                temp.bottom = 3;
-                waterBounds[i] = temp;
+		//The upper and lower bound both need to be odd numbers
+		if (IsEven (bottomBound)) 
+		{
+			++bottomBound;
+		}
+		if (IsEven (topBound)) 
+		{
+			++topBound;
+		}
 
-            }
-            if (waterBounds[i].top > rows -  5)
-            {
-                intPair temp = waterBounds[i];
-                temp.top = rows - 5;
-                waterBounds[i] = temp;
-
-            }
-        }
-        for (int i = 0; i < roadBounds.Count; i++)
-        {
-            if (roadBounds[i].bottom < 3)
-            {
-                intPair temp = roadBounds[i];
-                temp.bottom = 3;
-                roadBounds[i] = temp;
-
-            }
-            if (roadBounds[i].top > rows - 5)
-            {
-                intPair temp = roadBounds[i];
-                temp.top = rows - 5;
-                roadBounds[i] = temp;
-
-            }
-        }
+		ValidateList (waterBounds);
+		ValidateList (roadBounds);
     }
+
+	void ValidateList(List <intPair> _list)
+	{
+		for(int i = 0;i < _list.Count; i++)
+		{
+			//If bottom bound is above top bound the switch them over
+			if(_list[i].bottom > _list[i].top)
+			{
+				intPair temp;
+				temp.top = _list[i].bottom;
+				temp.bottom = _list[i].top;
+				_list[i] = temp;
+			}
+
+			//Bottom value should be odd
+			if(IsEven(_list[i].bottom))
+			{
+				intPair temp = _list[i];
+				//If on same space decrease otherwise increase
+				if(temp.top == temp.bottom)
+				{
+					temp.bottom -= 1;
+				}
+				else
+				{
+					temp.bottom += 1;
+				}
+
+				_list[i] = temp;
+
+			}
+			//Top value should be even
+			if(!IsEven(_list[i].top))
+			{
+				intPair temp = _list[i];
+				//If on same space increase otherwise decrease
+				if(temp.top == temp.bottom)
+				{
+					temp.bottom += 1;
+				}
+				{
+					temp.top -= 1;
+				}
+				_list[i] = temp;
+			}
+
+			//Move bounds so they dont go over bottom boundaries
+			if (_list[i].bottom < bottomBound)
+			{
+				intPair temp = _list[i];
+				temp.bottom = bottomBound;
+				_list[i] = temp;
+
+				//If previous bottom boundary is now above top boundary
+				if(_list[i].bottom >= _list[i].top)
+				{
+					intPair temp2 = _list[i];
+					temp2.top = temp2.bottom + 1;
+					_list[i] = temp2;
+				}
+			}
+			//Move so don't go over top boundaries
+			if (_list[i].top > rows - topBound)
+			{
+				intPair temp = _list[i];
+				temp.top = rows - topBound;
+				_list[i] = temp;
+
+				//If previous top boundary is now below bottom boundary
+				if(_list[i].top <= _list[i].bottom)
+				{
+					intPair temp2 = _list[i];
+					temp2.bottom = temp2.bottom - 1;
+					_list[i] = temp2;
+				}
+			}
+		}
+	}
 
 
     void MapSetup()
@@ -149,10 +217,10 @@ public class LevelTileManager : MonoBehaviour {
             Vector3 spawnerPos = Vector3.zero;
             bool waterSpawn = false;
             bool moveLeft = false;
-            foreach (intPair floats in waterBounds)
+            foreach (intPair ints in waterBounds)
             {
 
-                if (y >= floats.bottom && y <= floats.top)
+                if (y >= ints.bottom && y <= ints.top)
                 {
                     if (Random.value <= 0.5f)
                     {
@@ -167,9 +235,9 @@ public class LevelTileManager : MonoBehaviour {
                     waterSpawn = true;
                 }
             }
-            foreach (intPair floats in roadBounds)
+            foreach (intPair ints in roadBounds)
             {
-                if (y >= floats.bottom && y <= floats.top)
+                if (y >= ints.bottom && y <= ints.top)
                 {
                     if (Random.value <= 0.5f)
                     {

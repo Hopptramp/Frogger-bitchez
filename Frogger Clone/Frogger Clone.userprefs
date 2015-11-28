@@ -1,9 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\ControllerManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\LevelTileManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Gameplay\Display\Timer.cs" Line="34" Column="35" />
-      <File FileName="Assets\Scripts\Managers\ControllerManager.cs" Line="110" Column="18" />
+      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="141" Column="22" />
+      <File FileName="Assets\Scripts\Spawning\Spawner.cs" Line="64" Column="14" />
+      <File FileName="Assets\Scripts\Spawning\boundaryDelete.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Spawning\baseObject.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
