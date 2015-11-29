@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
 
 	private float spawnRate = 1.0f; //Need validate based on size of object and speed of object for spawnRate
 	private float timeOnLastSpawn = 0.0f;
+	private const float SPAWNRATE_SCALER = 6; //Adjusts spawnrate based on speed and size (6 seems to be the sweet spot)
 
     public float mapScale;
     //public bool moveLeft;
@@ -34,6 +35,8 @@ public class Spawner : MonoBehaviour
 	private int[] weightedSpawnChanceSum;   //The additive chances that each object can be spawned over another
 	private int totalWeightedSpawnChance = 0;   //The sum of all the weighted chances
 
+	private float randSpeedMod = 1;
+
 	//public int spawnWhat; // the prefab in the array must match the case number in the switch statement (with a minus 1)
 	// 1 = log going right, 2 = log going left, 3 = nothing
 
@@ -56,6 +59,7 @@ public class Spawner : MonoBehaviour
 		direction = _direction;
 		objects = new StatsStruct[numObjects];
 		weightedSpawnChanceSum = new int[numObjects];
+		randSpeedMod = Random.Range (0.5f, 2.0f);
 	}
 
 	//Adds a spawnable object type to list of objects that can be spawned
@@ -64,12 +68,12 @@ public class Spawner : MonoBehaviour
 		//Get prefab from object manager
 		objects[currentObjects] = objMan.GetObjectData(_object);
 
-		//Adds random variation to speed and spawn rate
-		objects[currentObjects].speedX *= Random.Range(0.5f, 2.0f);
-		
+		//Adds random variation to speed
+		objects[currentObjects].speedX *= randSpeedMod;
+		//Adds random variation to spawn rate based on size and speed
 		if (objects [currentObjects].sizeX / 2 > spawnRate) 
 		{
-			spawnRate = (objects [currentObjects].sizeX / 2) * Random.Range(0.75f, 1.25f);
+			spawnRate = ((objects [currentObjects].sizeX / 2) / (objects [currentObjects].speedX/SPAWNRATE_SCALER)) * Random.Range(0.75f, 2.0f);
 		}
 
 		//Begin setting up the weighted chances as some spawners can spawn multiple different things
@@ -77,6 +81,30 @@ public class Spawner : MonoBehaviour
 		weightedSpawnChanceSum[currentObjects] = totalWeightedSpawnChance;
 
 		++currentObjects;
+	}
+
+	//Alters the location of the spawner based on the largest object that can be spawned
+	public void AdjustPosition()
+	{
+		float largestSize = 0;
+		for(int i = 0; i < numObjects; ++i)
+		{
+			if(objects [i].sizeX > largestSize)
+			{
+				largestSize = objects [i].sizeX;
+			}
+		}
+		Vector3 newPos = transform.position;
+		switch (direction) 
+		{
+		case SpawnDirection.LEFT:
+			newPos.x += largestSize;
+			break;
+		case SpawnDirection.RIGHT:
+			newPos.x -= largestSize;
+			break;
+		}
+		transform.position = newPos;
 	}
 	
 	// Update is called once per frame

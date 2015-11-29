@@ -287,10 +287,10 @@ public class LevelTileManager : MonoBehaviour
         //}
 
 		//Instantiate death box for objects !!!Needs to be configured as to not delete the larger spawned objects immediately
-        GameObject leftBox = Instantiate(destructionBox, new Vector3(-18, rows/2 ,0), Quaternion.identity) as GameObject;
+        GameObject leftBox = Instantiate(destructionBox, new Vector3(-30, rows/2 ,0), Quaternion.identity) as GameObject;
         leftBox.transform.localScale = new Vector3 (1,rows,1);
         leftBox.transform.parent = mapHolder;
-        GameObject rightBox = Instantiate(destructionBox, new Vector3(columns + 17, rows / 2, 0), Quaternion.identity) as GameObject;
+        GameObject rightBox = Instantiate(destructionBox, new Vector3(columns + 29, rows / 2, 0), Quaternion.identity) as GameObject;
         rightBox.transform.localScale = new Vector3(1, rows, 1);
         rightBox.transform.parent = mapHolder;
 
@@ -368,6 +368,9 @@ public class LevelTileManager : MonoBehaviour
 			}
 			break;
 		}
+
+		//Alters position of spawner based on largest object it can spawn
+		spawner.AdjustPosition ();
 
 		//spawner.mapScale = mapScale;
 		//spawner.SetupDirection(dir);
