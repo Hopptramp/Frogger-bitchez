@@ -8,10 +8,12 @@ public class baseObject : MonoBehaviour
 	private float speedx;
 	private float speedz;
 	
-	// Use this for initialization
+	// All sprites are facing wrong way in context of game so reverse sprite here by default
 	void Start () 
 	{
-	
+		Vector3 scale = gameObject.transform.GetChild (0).localScale;
+		scale.x *= -1;
+		gameObject.transform.GetChild (0).localScale = scale;
 	}
 
 
@@ -33,6 +35,9 @@ public class baseObject : MonoBehaviour
 	{
 		speedx = -speedx;
 		speedz = -speedz;
+		Vector3 scale = gameObject.transform.GetChild (0).localScale;
+		scale.x *= -1;
+		gameObject.transform.GetChild (0).localScale = scale;
 	}
     
 

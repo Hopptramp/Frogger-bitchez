@@ -114,7 +114,7 @@ public class ControllerManager : MonoBehaviour
 #endif
 #if !XINPUT_CONTROL
 		//Loop through all possible controllers
-		for(int i = 0; i < 5; ++i)
+		for(int i = 0; i < MAX_CONTROLLERS; ++i)
 		{
 			//If left shoulder button has been pressed and not ready
 			if (Input.GetButtonDown("bumperleft" + (i + 1)))

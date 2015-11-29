@@ -14,7 +14,25 @@ public class LevelTileManager : MonoBehaviour
 		ALL_TYPES
 	}
 
+	//Allows assigning of differnt objects for spawners to spawn when they are setup
+	[System.Serializable]
+	public struct TileSpawnerChoices
+	{
+		public TileTypes tile; //Which tile type
+		public SpawnChoices[] spawnChoices;
+		[HideInInspector] public int totalWeightedChance;
+	}
+
+	//The different objects a spawner can spawn with the weighted chance of this type being chosen
+	[System.Serializable]
+	public struct SpawnChoices
+	{
+		public ObjectType[] objectTypes;
+		public int chance;
+	}
+
 	private TileTypes[] tileStructure;
+	public TileSpawnerChoices[] tileSpawnerChoices;
 
 	public int bottomBound = 3;
 	public int topBound = 5;
@@ -38,7 +56,7 @@ public class LevelTileManager : MonoBehaviour
     
 
     //Spawner object
-    public GameObject aSpawner;
+    public GameObject spawnerPrefab;
     public GameObject destructionBox;
 
     //Ranges for tiles
@@ -52,6 +70,28 @@ public class LevelTileManager : MonoBehaviour
 
 
     private List<Vector3> gridPositions = new List<Vector3>();
+
+	// Use this for initialization
+	void Start()
+	{
+		//Setup total weighted chance for each tile spawner choice type
+		for (int i = 0; i < tileSpawnerChoices.Length; ++i) 
+		{
+			int choicesSize = tileSpawnerChoices[i].spawnChoices.Length;
+			int totalWeightedChance = 0;
+			for(int j = 0; j < choicesSize; ++j)
+			{
+				totalWeightedChance += tileSpawnerChoices[i].spawnChoices[j].chance;
+			}
+			tileSpawnerChoices[i].totalWeightedChance = totalWeightedChance;
+		}
+		
+		tileStructure = new TileTypes[rows];
+		Validate();
+		InitialiseList();
+		MapSetup();
+		
+	}
 
     //Reference Positions -----Not used yet
     void InitialiseList()
@@ -220,50 +260,6 @@ public class LevelTileManager : MonoBehaviour
         }
 
 
-        // for all areas that are water or roads, place spawners.
-        /*for (int y = 0; y < rows; y++)
-        {
-
-            Vector3 spawnerPos = Vector3.zero;
-            bool waterSpawn = false;
-            bool moveLeft = false;
-            foreach (intPair ints in waterBounds)
-            {
-
-                if (y >= ints.bottom && y <= ints.top)
-                {
-                    if (Random.value <= 0.5f)
-                    {
-                        spawnerPos = new Vector3(columns + 2, y, 0);
-                        moveLeft = true;
-                    }
-                    else
-                    {
-                        spawnerPos = new Vector3(-3, y, 0);
-                        moveLeft = false;
-                    }
-                    waterSpawn = true;
-                }
-            }
-            foreach (intPair ints in roadBounds)
-            {
-                if (y >= ints.bottom && y <= ints.top)
-                {
-                    if (Random.value <= 0.5f)
-                    {
-                        spawnerPos = new Vector3(columns + 2, y, 0);
-                        moveLeft = true;
-                    }
-                    else
-                    {
-                        spawnerPos = new Vector3(-3, y, 0);
-                        moveLeft = false;
-                    }
-                    waterSpawn = false;
-                    
-                }
-            }*/
-
 			//For every grouping of two rows place a spawner
 			for(int i = 0; i < rows; ++i)
 			{
@@ -280,11 +276,7 @@ public class LevelTileManager : MonoBehaviour
 				}
 			}
             
-            //if (spawnerPos != Vector3.zero)
-           // {
-				
-            //}
-        //}
+
 
 		//Instantiate death box for objects !!!Needs to be configured as to not delete the larger spawned objects immediately
         GameObject leftBox = Instantiate(destructionBox, new Vector3(-30, rows/2 ,0), Quaternion.identity) as GameObject;
@@ -301,11 +293,7 @@ public class LevelTileManager : MonoBehaviour
         //Make sure camera orthographic size is set to half the row number in the inspector. Won't work properly here.
         mainCam.GetComponent<Camera>().orthographicSize *= mapScale;
 
-		/*GameObject[] spawners = GameObject.FindGameObjectsWithTag ("Spawner");
-		for(int i = 0; i < spawners.Length; ++i)
-		{
-			spawners[i].GetComponent<Spawner>().SpawnObject();
-		}*/
+	
 
         
     }
@@ -327,17 +315,35 @@ public class LevelTileManager : MonoBehaviour
 		}
 
 		//If a position for a spawner has been designated, then instantiate it and pass in the mapscale.
-		GameObject spawnerInstance = Instantiate(aSpawner, spawnerPos, Quaternion.identity) as GameObject;
+		GameObject spawnerInstance = Instantiate(spawnerPrefab, spawnerPos, Quaternion.identity) as GameObject;
 		Spawner spawner = spawnerInstance.GetComponent<Spawner>();
 
-		
-		// spawnerInstance.GetComponent<Spawner>().onWater = waterSpawn;
-		// spawnerInstance.GetComponent<Spawner>().moveLeft = moveLeft;
+		//tileSpawnerChoices[(int)_type]
+		SpawnChoices[] choices = tileSpawnerChoices[(int)_type].spawnChoices;
+		int totalWeightedChance = tileSpawnerChoices [(int)_type].totalWeightedChance;
+		int currentChance = 0;
+		int rand = Random.Range (0, totalWeightedChance);
+		for (int i = 0; i < choices.Length; ++i) 
+		{
+			currentChance += choices[i].chance;
+			if(rand <= currentChance)
+			{
+				int choicesLength = choices[i].objectTypes.Length;
+				spawner.SetupSpawnerBasics(choicesLength, mapScale, dir);
+				for(int j = 0; j < choicesLength; ++j)
+				{
+					spawner.SetupSpawnableObject(choices[i].objectTypes[j]);
+				}
+				break;
+			}
+		}
 
 		//The types of things that can be spawned on each tile type
-		switch(_type)
+		/*switch(_type)
 		{
 		case TileTypes.WATER:
+			//tileSpawnerChoices
+
 			//Can spawn 1 type of object
 			spawner.SetupSpawnerBasics(1, mapScale, dir);
 			//Random variation for what objects to use
@@ -374,14 +380,12 @@ public class LevelTileManager : MonoBehaviour
 				spawner.SetupSpawnableObject(ObjectType.CAR3);
 			}
 			break;
-		}
+		}*/
 
 		//Alters position of spawner based on largest object it can spawn
 		spawner.AdjustPosition ();
 
 
-		//spawner.mapScale = mapScale;
-		//spawner.SetupDirection(dir);
 
 		//Parent spawners to the map
 		spawnerInstance.transform.SetParent(mapHolder);
@@ -413,55 +417,5 @@ public class LevelTileManager : MonoBehaviour
 		return false;
 	}
 
-
-	/*//check if the player is on water
-	public bool playerOnWater(GameObject _player, )
-	{
-		float playerPos = (_player.transform.position.y) + (rows/2)+ 1;
-		intPair bridge;
-		bridge.top = 1;
-		bridge.bottom = 1;
-
-		foreach (intPair floats in waterBounds) 
-		{	
-			foreach (intPair roads in roadBounds)
-			{
-				if (roads.bottom > floats.bottom && roads.top < floats.top)
-				{
-					bridge.top = roads.top;
-					bridge.bottom = roads.bottom;
-				}
-			}
-		}
-		
-		foreach (intPair floats in waterBounds) 
-		{
-			if (playerPos >= floats.bottom && playerPos <= floats.top) 
-			{
-				if (playerPos >= bridge.top || playerPos <= bridge.bottom)
-				{
-					// you are on water
-					return true;
-				}
-			}
-		}
-		//you are not on water
-		return false;
-	}*/
-
-
-    // Use this for initialization
-    void Start()
-    {
-		tileStructure = new TileTypes[rows];
-        Validate();
-        InitialiseList();
-        MapSetup();
-
-    }
-
-    // Update is called once per frame
-    void Update () {
-	
-	}
+    
 }

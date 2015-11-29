@@ -14,16 +14,6 @@ public class playerCollision : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
-		{
-				//Debug.Log (tileMan.TileAtPosition ((int)(transform.position.y + ((75 / 2) + 1))).ToString ());
-			Debug.Log("WATER");
-		}
-		if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.PLAIN)) 
-		{
-			//Debug.Log (tileMan.TileAtPosition ((int)(transform.position.y + ((75 / 2) + 1))).ToString ());
-			Debug.Log("PLAIN");
-		}
 		// if the player has a parent
 		if (gameObject.transform.parent) 
 		{

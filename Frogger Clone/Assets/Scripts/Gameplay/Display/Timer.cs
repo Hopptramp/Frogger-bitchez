@@ -27,6 +27,8 @@ public class Timer : MonoBehaviour
 			if(controllerMan.AtLeastOnePlayer())
 			{
 				controllerMan.NextLevel();
+				time = 0.0f;
+				timer.text = TimeToDisplay ();
 			}
 			else
 			{

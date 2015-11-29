@@ -110,7 +110,7 @@ public class Spawner : MonoBehaviour
 	public void SpawnInitialObjects ()
 	{
 		int randObject = SelectRandomObject ();
-		float distance = (objects [randObject].speedX * randSpeedMod) * spawnRate;
+		float distance = (objects [randObject].speedX) * spawnRate;
 		int duplicates = 0;
 		while(true)
 		{

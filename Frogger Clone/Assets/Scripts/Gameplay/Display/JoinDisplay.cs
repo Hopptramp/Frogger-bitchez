@@ -55,11 +55,11 @@ public class JoinDisplay : MonoBehaviour
 
 			Vector3 spawnPoint = new Vector3(width-size,height,0); 
 			readyDisplays[i * 2] = Instantiate(readyPrefab, spawnPoint, Quaternion.identity) as Image;
-			readyDisplays[i * 2].transform.parent = transform;
+			readyDisplays[i * 2].transform.SetParent(transform);
 
 			spawnPoint = new Vector3(width+size, height,0); 
 			readyDisplays[(i * 2)+1] = Instantiate(readyPrefab, spawnPoint, Quaternion.identity) as Image;
-			readyDisplays[(i * 2)+1].transform.parent = transform;
+			readyDisplays[(i * 2)+1].transform.SetParent(transform);
 		}
 	}
 	
