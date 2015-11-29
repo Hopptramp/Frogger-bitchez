@@ -300,6 +300,13 @@ public class LevelTileManager : MonoBehaviour
         GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         //Make sure camera orthographic size is set to half the row number in the inspector. Won't work properly here.
         mainCam.GetComponent<Camera>().orthographicSize *= mapScale;
+
+		/*GameObject[] spawners = GameObject.FindGameObjectsWithTag ("Spawner");
+		for(int i = 0; i < spawners.Length; ++i)
+		{
+			spawners[i].GetComponent<Spawner>().SpawnObject();
+		}*/
+
         
     }
 
@@ -372,11 +379,13 @@ public class LevelTileManager : MonoBehaviour
 		//Alters position of spawner based on largest object it can spawn
 		spawner.AdjustPosition ();
 
+
 		//spawner.mapScale = mapScale;
 		//spawner.SetupDirection(dir);
 
 		//Parent spawners to the map
 		spawnerInstance.transform.SetParent(mapHolder);
+		spawner.SpawnInitialObjects ();
 	}
 
 	public TileTypes TileAtPosition(int _position)

@@ -106,6 +106,40 @@ public class Spawner : MonoBehaviour
 		}
 		transform.position = newPos;
 	}
+
+	public void SpawnInitialObjects ()
+	{
+		int randObject = SelectRandomObject ();
+		float distance = (objects [randObject].speedX * randSpeedMod) * spawnRate;
+		int duplicates = 0;
+		while(true)
+		{
+			Vector3 spawnPos = gameObject.transform.position;
+			spawnPos.x += (distance * duplicates);
+			if(spawnPos.x < 150f && direction == SpawnDirection.RIGHT)
+			{
+				GameObject spawnedObject = SpawnLogic (randObject);
+				spawnedObject.transform.position = spawnPos;
+				spawnedObject.transform.parent = transform.parent;
+					
+				++duplicates;
+			}
+			else if(spawnPos.x > 0.0f && direction == SpawnDirection.LEFT)
+			{
+				GameObject spawnedObject = SpawnLogic (randObject);
+				spawnedObject.transform.position = spawnPos;
+				spawnedObject.transform.parent = transform.parent;	
+
+				--duplicates;
+			}
+			else
+			{
+				break;
+			}
+
+		}
+
+	}
 	
 	// Update is called once per frame
 	void Update () 
@@ -122,7 +156,13 @@ public class Spawner : MonoBehaviour
 		}
 	}
 
-	void SpawnObject()
+	public void SpawnObject()
+	{
+		GameObject spawnedObject = SpawnLogic (SelectRandomObject());
+		spawnedObject.transform.parent = transform.parent;	
+	}
+
+	int SelectRandomObject()
 	{
 		//Determine which object of the set it can spawn should be spawned in this instance
 		int objectID = 0;
@@ -137,15 +177,19 @@ public class Spawner : MonoBehaviour
 				break;
 			}
 		}
+		return objectID;
+	}
 
+	GameObject SpawnLogic(int _objectID)
+	{
 		//Instantiate object, assign parameters and set direction 
-		GameObject spawnedObject = Instantiate(objects[objectID].objectToSpawn, gameObject.transform.position, Quaternion.identity) as GameObject;
+		GameObject spawnedObject = Instantiate(objects[_objectID].objectToSpawn, gameObject.transform.position, Quaternion.identity) as GameObject;
 		baseObject baseScript = spawnedObject.GetComponent<baseObject> ();
-		baseScript.assignParameters(objects[objectID],mapScale);
+		baseScript.assignParameters(objects[_objectID],mapScale);
 		if (direction == SpawnDirection.LEFT) 
 		{
 			baseScript.InvertDirection();
 		}
-		spawnedObject.transform.parent = transform.parent;	
+		return spawnedObject;
 	}
 }

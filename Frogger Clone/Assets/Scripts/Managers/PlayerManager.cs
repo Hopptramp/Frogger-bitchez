@@ -22,6 +22,12 @@ public class PlayerManager : MonoBehaviour
 			
 			players[0].transform.position = new Vector3 (gameObject.transform.position.x, -37, 0);
 		}
+		if (Input.GetKey(KeyCode.Z))
+		{
+			players[1].SetActive(true);
+			
+			players[1].transform.position = new Vector3 (gameObject.transform.position.x, -37, 0);
+		}
 	}
 
 	public void SetupPlayers(int _numPlayers)
@@ -53,6 +59,14 @@ public class PlayerManager : MonoBehaviour
 			players[i] = Instantiate(playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
 			players[i].GetComponent<PlayerMain>().SetupPlayer(i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().inputControllers[i]);
 			players[i].GetComponent<PlayerMovement>().SetMovementIsPaused(true);
+		}
+
+		for (int i = 0; i < NUM_OF_PLAYERS - 1; ++i) 
+		{
+			for(int j = i + 1; j < NUM_OF_PLAYERS; ++j)
+			{
+				Physics2D.IgnoreCollision(players[i].GetComponent<BoxCollider2D>(), players[j].GetComponent<BoxCollider2D>());
+			}
 		}
 	}
 

@@ -61,6 +61,10 @@ public class playerCollision : MonoBehaviour
 				gameObject.transform.SetParent (col.gameObject.transform);
 			//}
 		}
+		if (col.gameObject.tag == "Enemy")
+		{
+			GetComponent<PlayerMain>().OnDeath(); 
+		}
 	}
 
 	//Needed to get on the initial platform as you can collide with log before being officially on a water tile then trigger enter isn't called
