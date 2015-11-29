@@ -12,7 +12,6 @@ public class PlayerMain : MonoBehaviour
 {
 	private int playerNumber;
 	private InputControl inputControl;
-	private bool isAlive = true;
 
 	// Use this for initialization
 	void Start () 
@@ -23,7 +22,7 @@ public class PlayerMain : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-	
+
 	}
 
 	public void SetupPlayer(int _playerNumber, InputControl _inputControl)
@@ -38,10 +37,6 @@ public class PlayerMain : MonoBehaviour
 
 	public void OnDeath()
 	{
-		if (isAlive == true) 
-		{
-			isAlive = false;
-			//GetComponent<PlayerMovement> ().OnDeath ();
-		}
+		GetComponent<PlayerMovement> ().OnDeath ();
 	}
 }

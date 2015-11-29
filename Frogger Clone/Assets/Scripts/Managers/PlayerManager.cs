@@ -16,7 +16,12 @@ public class PlayerManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		if (Input.GetKey(KeyCode.A))
+		{
+			players[0].SetActive(true);
+			
+			players[0].transform.position = new Vector3 (gameObject.transform.position.x, -37, 0);
+		}
 	}
 
 	public void SetupPlayers(int _numPlayers)

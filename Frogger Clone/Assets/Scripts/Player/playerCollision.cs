@@ -4,6 +4,7 @@ using System.Collections;
 public class playerCollision : MonoBehaviour 
 {
 	private LevelTileManager tileMan;
+	private bool tryDeath = true;
 
 	void Start()
 	{
@@ -13,15 +14,37 @@ public class playerCollision : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log (tileMan.TileAtPosition ((int)(transform.position.y+((75/2)+1))).ToString ());
+		if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
+		{
+				//Debug.Log (tileMan.TileAtPosition ((int)(transform.position.y + ((75 / 2) + 1))).ToString ());
+			Debug.Log("WATER");
+		}
+		if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.PLAIN)) 
+		{
+			//Debug.Log (tileMan.TileAtPosition ((int)(transform.position.y + ((75 / 2) + 1))).ToString ());
+			Debug.Log("PLAIN");
+		}
 		// if the player has a parent
 		if (gameObject.transform.parent) 
 		{
+
 			// if the player is not on water
 			if (!tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER)) 
 			{
 				// remove the parent
 				removeParent ();
+				tryDeath = true;
+			}
+		}
+		if (tryDeath) 
+		{
+			if (!gameObject.transform.parent) 
+			{
+				if(tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER))
+				{
+					GetComponent<PlayerMain>().OnDeath(); 
+					tryDeath = true;
+				}
 			}
 		}
 	}
@@ -31,10 +54,12 @@ public class playerCollision : MonoBehaviour
 		// parenting the player to the logs
 		if (col.gameObject.tag == "Platform") 
 		{
-			if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
-			{
+			//On a platform so shouldn't die
+			tryDeath = false;
+			//if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
+			//{
 				gameObject.transform.SetParent (col.gameObject.transform);
-			}
+			//}
 		}
 	}
 
@@ -44,29 +69,40 @@ public class playerCollision : MonoBehaviour
 		//If a platform
 		if (col.gameObject.tag == "Platform") 
 		{
+			//On a platform so shouldn't die
+			tryDeath = false;
 			//And not already parented to something
 			if (!gameObject.transform.parent) 
 			{
 				//And on a water tile
-				if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
-				{
+				//if (tileMan.ObjectOnTile (gameObject, LevelTileManager.TileTypes.WATER)) 
+				//{
 					//Parent to object
 					gameObject.transform.SetParent (col.gameObject.transform);
-				}
+				//}
 			}
 		}
 	}
 
 	// if the player steps off a log
-	void OnTriggerExit2D()
+	void OnTriggerExit2D(Collider2D col)
 	{
-		//Need to also test that is a carrying object and not an impact object
-		// if the player is on water
-		if (tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER)) 
+		//If a platform
+		if (col.gameObject.tag == "Platform") 
 		{
-			// send on the message the player is dead
-			//GetComponent<PlayerMain>().OnDeath(); 
+			if (gameObject.transform.parent == col.gameObject.transform) 
+			{
+				removeParent ();
+			}
+			//Need to also test that is a carrying object and not an impact object
+			// if the player is on water
+			if (tileMan.ObjectOnTile(gameObject, LevelTileManager.TileTypes.WATER)) 
+			{
+				tryDeath = true;
+				// send on the message the player is dead
+				//GetComponent<PlayerMain>().OnDeath(); 
 
+			}
 		}
 	}
 

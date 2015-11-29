@@ -386,7 +386,7 @@ public class LevelTileManager : MonoBehaviour
 
 	public bool PositionOnTile(int _position, TileTypes _tile)
 	{
-		_position = Mathf.RoundToInt(_position + (rows/2) + 1);
+		_position = (int)(_position + (rows/2) + 1);
 		if (tileStructure [_position] == _tile) 
 		{
 			return true;
@@ -396,7 +396,7 @@ public class LevelTileManager : MonoBehaviour
 
 	public bool ObjectOnTile(GameObject _object, TileTypes _tile)
 	{
-		int objectPos = Mathf.RoundToInt((_object.transform.position.y) + (rows/2) + 1);
+		int objectPos = (int)((_object.transform.position.y) + (rows/2) + 1);
 		if (tileStructure [objectPos] == _tile) 
 		{
 			return true;
