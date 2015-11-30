@@ -67,7 +67,7 @@ public class LevelTileManager : MonoBehaviour
     
 
     //Transform to parent the tiles to.
-    private Transform mapHolder;
+    [HideInInspector]public Transform mapHolder;
 
 
     private List<Vector3> gridPositions = new List<Vector3>();
@@ -289,7 +289,7 @@ public class LevelTileManager : MonoBehaviour
 
 		GameObject finalBox  = Instantiate(finalDeathZone, new Vector3(((float)columns/2.0f)-0.5f,rows-0.5f-(((float)topBound-1.0f)/2.0f),0.0f), Quaternion.identity) as GameObject; 
 		Vector3 newScale = finalBox.transform.localScale;
-		newScale.y = topBound - 1;
+		newScale.y = (topBound - 1) - 1.0f;
 		finalBox.transform.localScale = newScale;
 		finalBox.transform.parent = mapHolder;
 

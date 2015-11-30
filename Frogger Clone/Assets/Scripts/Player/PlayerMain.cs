@@ -13,6 +13,7 @@ public class PlayerMain : MonoBehaviour
 	private int playerNumber;
 	private InputControl inputControl;
 	public bool isFinished = false;
+	private bool deathInFinalZone = true;
 
 	// Use this for initialization
 	void Start () 
@@ -44,5 +45,22 @@ public class PlayerMain : MonoBehaviour
 	public void onWin()
 	{
 		GetComponent<PlayerMovement> ().OnWin ();
+	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.gameObject.tag == "WinZone") 
+		{
+			deathInFinalZone = false;
+			transform.position = col.gameObject.transform.position;
+			onWin ();
+		}
+		if(col.gameObject.tag == "FinalDeathZone")
+		{
+			if(deathInFinalZone)
+			{
+				OnDeath ();
+			}
+		}
 	}
 }

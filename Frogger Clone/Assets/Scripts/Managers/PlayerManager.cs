@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
 	private int NUM_OF_PLAYERS;
 	private GameObject[] players;
 	public GameObject playerPrefab;
+	public GameObject winZonePrefab;
 
 	// Use this for initialization
 	void Start () 
@@ -75,11 +76,18 @@ public class PlayerManager : MonoBehaviour
 		for (int i = 0; i < NUM_OF_PLAYERS; ++i) 
 		{
 			//Algorithm to determine location of player
-			Vector3 spawnPoint = new Vector3((((-NUM_OF_PLAYERS/2)+ i + 0.5f)*multiplier),-HEIGHT/2,0); 
+			Vector3 spawnPoint = new Vector3 ((((-NUM_OF_PLAYERS / 2) + i + 0.5f) * multiplier), -HEIGHT / 2, 0); 
 			//Instantiate and set starting parameters of player
-			players[i] = Instantiate(playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
-			players[i].GetComponent<PlayerMain>().SetupPlayer(i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().inputControllers[i]);
-			players[i].GetComponent<PlayerMovement>().SetMovementIsPaused(true);
+			players [i] = Instantiate (playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
+			players [i].GetComponent<PlayerMain> ().SetupPlayer (i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().inputControllers [i]);
+			players [i].GetComponent<PlayerMovement> ().SetMovementIsPaused (true);
+
+			//Set up winzones to be in line with players
+			LevelTileManager tileMan = GameObject.Find ("Managers").GetComponent<LevelTileManager> ();
+			float y = ((tileMan.rows/2) + 0.5f - (float)tileMan.topBound) + 1.9f;
+			Vector3 winLocation = new Vector3 (players [i].transform.position.x, y, 0);
+			GameObject winZone = Instantiate (winZonePrefab, winLocation, Quaternion.identity) as GameObject;
+			winZone.transform.parent = tileMan.mapHolder;
 		}
 
 		for (int i = 0; i < NUM_OF_PLAYERS - 1; ++i) 

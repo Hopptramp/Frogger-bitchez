@@ -11,6 +11,7 @@ public enum ObjectType
 	CAR1,
 	CAR2,
 	CAR3,
+	VAN,
 	ALL_TYPES
 }
 

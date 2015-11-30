@@ -1,11 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\LevelTileManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\ObjectManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="290" Column="67" />
-      <File FileName="Assets\Scripts\Gameplay\SceneStartup.cs" Line="14" Column="1" />
-      <File FileName="Assets\Scripts\Gameplay\Display\DisplayScript.cs" Line="11" Column="34" />
-      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="10" Column="2" />
+      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="92" Column="3" />
+      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="292" Column="37" />
+      <File FileName="Assets\Scripts\Gameplay\SceneStartup.cs" Line="44" Column="5" />
+      <File FileName="Assets\Scripts\Gameplay\Display\DisplayScript.cs" Line="61" Column="29" />
+      <File FileName="Assets\Scripts\Player\PlayerMain.cs" Line="55" Column="59" />
+      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="493" Column="30" />
+      <File FileName="Assets\Scripts\Managers\ObjectManager.cs" Line="14" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,8 +19,9 @@
                 <Node name="Display" expanded="True" />
               </Node>
               <Node name="Managers" expanded="True">
-                <Node name="LevelTileManager.cs" selected="True" />
+                <Node name="ObjectManager.cs" selected="True" />
               </Node>
+              <Node name="Player" expanded="True" />
             </Node>
           </Node>
         </State>
