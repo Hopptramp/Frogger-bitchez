@@ -18,19 +18,7 @@ public class PlayerManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		// CHANGE THIS SO THAT WE CAN INSTANT RESET
-		if (Input.GetKey(KeyCode.A))
-		{
-			players[0].SetActive(true);
-			
-			players[0].transform.position = new Vector3 (gameObject.transform.position.x, -37, 0);
-		}
-		if (Input.GetKey(KeyCode.Z))
-		{
-			players[1].SetActive(true);
-			
-			players[1].transform.position = new Vector3 (gameObject.transform.position.x, -37, 0);
-		}
+
 	}
 
     public void tryEndLevel(GameObject _player)
@@ -46,11 +34,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
         updateConstantData();
-
-        if (!instantReset)
-        {
-            Application.LoadLevel("EndScene");
-        }
+        Application.LoadLevel("EndScene");
     }
 
 	public void updateConstantData()

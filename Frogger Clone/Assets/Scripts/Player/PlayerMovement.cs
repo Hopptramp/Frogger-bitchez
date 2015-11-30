@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
 	public GameObject explosion;
 	public float explosionLifetime = 1.0f;
 
-
 	public float movementSpeed = 5.0f;
 	public float completeMoveDistance = 3.09f;
 	public float movingDistance = 0.0f;
@@ -487,7 +486,10 @@ public class PlayerMovement : MonoBehaviour
         {
             resetPosition();
         }
-        GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
+		else
+		{
+        	GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
+		}
 	}
     void resetPosition()
     {
