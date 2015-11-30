@@ -15,6 +15,7 @@ public class ConstantData : MonoBehaviour
 	public int numOfPlayers;
 
 	public GameObject[] players; 
+	public bool setupPlayersFromData = false;
 	
 	// Use this for initialization
 	void Start () 

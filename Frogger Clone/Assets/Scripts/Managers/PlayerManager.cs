@@ -67,9 +67,18 @@ public class PlayerManager : MonoBehaviour
 		{
 			//Algorithm to determine location of player
 			Vector3 spawnPoint = new Vector3 ((((-NUM_OF_PLAYERS / 2) + i + 0.5f) * multiplier), -HEIGHT / 2, 0); 
-			//Instantiate and set starting parameters of player
-			players [i] = Instantiate (playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
-			players [i].GetComponent<PlayerMain> ().SetupPlayer (i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().inputControllers [i]);
+
+			//Setup players from already existing 
+			if(GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().setupPlayersFromData)
+			{
+				players [i] = Instantiate (GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().players[i], spawnPoint, Quaternion.identity) as GameObject;
+			}
+			//Instantiate and set starting parameters of player from scratch
+			else
+			{
+				players [i] = Instantiate (playerPrefab, spawnPoint, Quaternion.identity) as GameObject;
+				players [i].GetComponent<PlayerMain> ().SetupPlayer (i + 1, GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().inputControllers [i]);
+			}
 			players [i].GetComponent<PlayerMovement> ().SetMovementIsPaused (true);
 
 			//Set up winzones to be in line with players

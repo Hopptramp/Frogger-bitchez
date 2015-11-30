@@ -1,22 +1,27 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerMovement.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Spawning\Spawner.cs">
     <Files>
-      <File FileName="Assets\Scripts\Player\PlayerMain.cs" Line="66" Column="17" />
-      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Gameplay\Display\JoinDisplay.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Gameplay\SceneStartup.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Gameplay\Display\DisplayScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Managers\ObjectManager.cs" Line="27" Column="32" />
+      <File FileName="Assets\Scripts\Managers\ObjectManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Gameplay\WinZoneLogic.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\ConstantData.cs" Line="18" Column="43" />
+      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="74" Column="171" />
+      <File FileName="Assets\Scripts\Player\PlayerMain.cs" Line="75" Column="15" />
+      <File FileName="Assets\Scripts\Spawning\baseObject.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Spawning\Spawner.cs" Line="137" Column="5" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Player" expanded="True">
-                <Node name="PlayerMovement.cs" selected="True" />
+              <Node name="Gameplay" expanded="True" />
+              <Node name="Managers" expanded="True" />
+              <Node name="Player" expanded="True" />
+              <Node name="Spawning" expanded="True">
+                <Node name="Spawner.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -33,7 +38,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="E:\Frogger-bitchez\Frogger Clone\Assets\Scripts\Player\PlayerMain.cs" line="75" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

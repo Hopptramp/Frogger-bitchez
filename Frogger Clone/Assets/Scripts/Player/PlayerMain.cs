@@ -70,5 +70,9 @@ public class PlayerMain : MonoBehaviour
 				OnDeath ();
 			}
 		}
+		if(col.gameObject.tag == "DeathBox")
+		{
+			OnDeath ();
+		}
 	}
 }

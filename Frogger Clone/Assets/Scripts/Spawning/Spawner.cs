@@ -86,6 +86,7 @@ public class Spawner : MonoBehaviour
 	//Alters the location of the spawner based on the largest object that can be spawned
 	public void AdjustPosition()
 	{
+		//Get the object with the largest scale
 		float largestSize = 0;
 		for(int i = 0; i < numObjects; ++i)
 		{
@@ -94,6 +95,21 @@ public class Spawner : MonoBehaviour
 				largestSize = objects [i].sizeX;
 			}
 		}
+		//Set the speed of all objects to the slowest object
+		float slowestSpeed = 1000.0f;
+		for(int i = 0; i < numObjects; ++i)
+		{
+			if(objects [i].speedX < slowestSpeed)
+			{
+				slowestSpeed = objects [i].speedX;
+			}
+		}
+		for(int i = 0; i < numObjects; ++i)
+		{
+			objects [i].speedX = slowestSpeed;
+		}
+
+		//Scales the spawner position
 		Vector3 newPos = transform.position;
 		switch (direction) 
 		{
@@ -109,13 +125,14 @@ public class Spawner : MonoBehaviour
 
 	public void SpawnInitialObjects ()
 	{
-		int randObject = SelectRandomObject ();
-		float distance = (objects [randObject].speedX) * spawnRate;
+		//Everything should have the same speed by this point
+		float distance = (objects [0].speedX) * spawnRate;
 		int duplicates = 0;
 		while(true)
 		{
 			Vector3 spawnPos = gameObject.transform.position;
 			spawnPos.x += (distance * duplicates);
+			int randObject = SelectRandomObject ();
 			if(spawnPos.x < 150f && direction == SpawnDirection.RIGHT)
 			{
 				GameObject spawnedObject = SpawnLogic (randObject);

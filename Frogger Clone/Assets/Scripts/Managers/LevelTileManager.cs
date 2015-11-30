@@ -287,10 +287,14 @@ public class LevelTileManager : MonoBehaviour
         rightBox.transform.localScale = new Vector3(1, rows, 1);
         rightBox.transform.parent = mapHolder;
 
+		//Spawn and scale death box at the top to match upper bounds
 		GameObject finalBox  = Instantiate(finalDeathZone, new Vector3(((float)columns/2.0f)-0.5f,rows-0.5f-(((float)topBound-1.0f)/2.0f),0.0f), Quaternion.identity) as GameObject; 
 		Vector3 newScale = finalBox.transform.localScale;
 		newScale.y = (topBound - 1) - 1.0f;
 		finalBox.transform.localScale = newScale;
+		newScale.y = 1 + (1 / newScale.y);
+		//Need to scale the sprite individually it is not quite equal to collision bounds
+		finalBox.transform.GetChild(0).localScale = newScale;
 		finalBox.transform.parent = mapHolder;
 
         //Move mapholder to correct position
