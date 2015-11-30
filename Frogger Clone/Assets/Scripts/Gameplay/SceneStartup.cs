@@ -37,6 +37,7 @@ public class SceneStartup : MonoBehaviour
 			if(Time.realtimeSinceStartup - timeOnSetupFinished > startTimer)
 			{
 				displayScript.UpdateTimer (startTimer);
+				displayScript.GameBegun();
 				playerMan.PlayersStart();
 				hasGameBegun = true;
 			}

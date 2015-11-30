@@ -10,7 +10,7 @@ public class DisplayScript : MonoBehaviour
 	private Text gameTimerText;
 	public int gameTimeSeconds = 120;
 	private float time = 0;
-	private bool gameBegun = true;
+	private bool gameBegun = false;
 
 	// Use this for initialization
 	void Start () 
@@ -34,6 +34,11 @@ public class DisplayScript : MonoBehaviour
 				gameTimerText.text = TimeToDisplay ();
 			}
 		}
+	}
+
+	public void GameBegun()
+	{
+		gameBegun = true;
 	}
 
 	public void SetStartTime(float _startTime)
