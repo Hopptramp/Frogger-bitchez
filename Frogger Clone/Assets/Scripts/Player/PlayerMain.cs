@@ -51,9 +51,15 @@ public class PlayerMain : MonoBehaviour
 	{
 		if (col.gameObject.tag == "WinZone") 
 		{
+			if(col.gameObject.GetComponent<WinZoneLogic>().isTaken == true)
+			{
+				OnDeath ();
+				return;
+			}
 			deathInFinalZone = false;
 			transform.position = col.gameObject.transform.position;
 			onWin ();
+			return;
 		}
 		if(col.gameObject.tag == "FinalDeathZone")
 		{

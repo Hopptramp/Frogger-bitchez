@@ -1,27 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\ObjectManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="92" Column="3" />
-      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="292" Column="37" />
-      <File FileName="Assets\Scripts\Gameplay\SceneStartup.cs" Line="44" Column="5" />
-      <File FileName="Assets\Scripts\Gameplay\Display\DisplayScript.cs" Line="61" Column="29" />
-      <File FileName="Assets\Scripts\Player\PlayerMain.cs" Line="55" Column="59" />
-      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="493" Column="30" />
-      <File FileName="Assets\Scripts\Managers\ObjectManager.cs" Line="14" Column="6" />
+      <File FileName="Assets\Scripts\Player\PlayerMain.cs" Line="66" Column="17" />
+      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Gameplay\SceneStartup.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Gameplay\Display\DisplayScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\ObjectManager.cs" Line="27" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="Gameplay" expanded="True">
-                <Node name="Display" expanded="True" />
+              <Node name="Player" expanded="True">
+                <Node name="PlayerMovement.cs" selected="True" />
               </Node>
-              <Node name="Managers" expanded="True">
-                <Node name="ObjectManager.cs" selected="True" />
-              </Node>
-              <Node name="Player" expanded="True" />
             </Node>
           </Node>
         </State>
