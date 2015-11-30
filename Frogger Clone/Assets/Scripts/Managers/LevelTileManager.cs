@@ -58,6 +58,7 @@ public class LevelTileManager : MonoBehaviour
     //Spawner object
     public GameObject spawnerPrefab;
     public GameObject destructionBox;
+	public GameObject finalDeathZone;
 
     //Ranges for tiles
     public List <intPair> waterBounds = new List<intPair>();
@@ -286,12 +287,19 @@ public class LevelTileManager : MonoBehaviour
         rightBox.transform.localScale = new Vector3(1, rows, 1);
         rightBox.transform.parent = mapHolder;
 
+		GameObject finalBox  = Instantiate(finalDeathZone, new Vector3(((float)columns/2.0f)-0.5f,rows-0.5f-(((float)topBound-1.0f)/2.0f),0.0f), Quaternion.identity) as GameObject; 
+		Vector3 newScale = finalBox.transform.localScale;
+		newScale.y = topBound - 1;
+		finalBox.transform.localScale = newScale;
+		finalBox.transform.parent = mapHolder;
+
         //Move mapholder to correct position
         mapHolder.transform.position = new Vector3(- mapScale * (columns / 2) +(0.5f*mapScale), -mapScale*(rows / 2), 0f);
         mapHolder.transform.localScale *=  mapScale;
         GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         //Make sure camera orthographic size is set to half the row number in the inspector. Won't work properly here.
         mainCam.GetComponent<Camera>().orthographicSize *= mapScale;
+
 
 	
 

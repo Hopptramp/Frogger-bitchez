@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Gameplay\Display\DisplayScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\LevelTileManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Gameplay\SceneStartup.cs" Line="14" Column="29" />
+      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="290" Column="67" />
+      <File FileName="Assets\Scripts\Gameplay\SceneStartup.cs" Line="14" Column="1" />
       <File FileName="Assets\Scripts\Gameplay\Display\DisplayScript.cs" Line="11" Column="34" />
-      <File FileName="Assets\Scripts\Managers\LevelTileManager.cs" Line="22" Column="23" />
+      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="10" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,9 +13,10 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="Gameplay" expanded="True">
-                <Node name="Display" expanded="True">
-                  <Node name="DisplayScript.cs" selected="True" />
-                </Node>
+                <Node name="Display" expanded="True" />
+              </Node>
+              <Node name="Managers" expanded="True">
+                <Node name="LevelTileManager.cs" selected="True" />
               </Node>
             </Node>
           </Node>
