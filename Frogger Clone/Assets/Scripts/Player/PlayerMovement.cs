@@ -483,9 +483,18 @@ public class PlayerMovement : MonoBehaviour
 		//sprite.SetActive (false);
 		gameObject.SetActive(false);
 		//set is finished
-		GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
+        if (GameObject.Find("Managers").GetComponent<PlayerManager>().instantReset)
+        {
+            resetPosition();
+        }
+        GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
 	}
-	public void OnWin ()
+    void resetPosition()
+    {
+        gameObject.SetActive(true);
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, -37, 0);
+    }
+    public void OnWin ()
 	{
 		// finds the time taken for the player to reach the end.
 		timeTaken = GameObject.Find ("DisplayCanvas").GetComponent<DisplayScript> ().gameTimeSeconds - GameObject.Find ("DisplayCanvas").GetComponent<DisplayScript> ().time;

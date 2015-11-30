@@ -14,6 +14,7 @@ public class PlayerMain : MonoBehaviour
 	private InputControl inputControl;
 	public bool isFinished = false;
 	private bool deathInFinalZone = true;
+    
 
 	// Use this for initialization
 	void Start () 
@@ -37,13 +38,14 @@ public class PlayerMain : MonoBehaviour
 		GetComponent<PlayerMovement> ().SetInputControl (inputControl);
 	}
 
-	public void OnDeath()
-	{
-		GetComponent<PlayerMovement> ().OnDeath ();
-	}
+    public void OnDeath()
+    {
 
-	public void onWin()
-	{
+        GetComponent<PlayerMovement>().OnDeath();
+    }
+
+    public void onWin()
+    {
 		GetComponent<PlayerMovement> ().OnWin ();
 	}
 

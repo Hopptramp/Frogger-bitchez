@@ -7,9 +7,10 @@ public class PlayerManager : MonoBehaviour
 	private GameObject[] players;
 	public GameObject playerPrefab;
 	public GameObject winZonePrefab;
+    public bool instantReset = true;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start () 
 	{
 	
 	}
@@ -32,20 +33,25 @@ public class PlayerManager : MonoBehaviour
 		}
 	}
 
-	public void tryEndLevel(GameObject _player)
-	{
-		// set the player finished to be true
-		_player.GetComponent<PlayerMain> ().isFinished = true;
+    public void tryEndLevel(GameObject _player)
+    {
+        // set the player finished to be true
+        _player.GetComponent<PlayerMain>().isFinished = true;
 
-		for (int i = 0; i < NUM_OF_PLAYERS; ++i)
-		{
-			if(players[i].GetComponent<PlayerMain>().isFinished == false)
-			{
-				return;
-			}
-		}
-		updateConstantData ();
-	}
+        for (int i = 0; i < NUM_OF_PLAYERS; ++i)
+        {
+            if (players[i].GetComponent<PlayerMain>().isFinished == false)
+            {
+                return;
+            }
+        }
+        updateConstantData();
+
+        if (!instantReset)
+        {
+            Application.LoadLevel("EndScene");
+        }
+    }
 
 	public void updateConstantData()
 	{
