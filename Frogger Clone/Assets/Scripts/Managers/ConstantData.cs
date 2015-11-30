@@ -13,6 +13,8 @@ public class ConstantData : MonoBehaviour
 	public int MAX_CONTROLLERS;
 	public InputControl[] inputControllers;
 	public int numOfPlayers;
+
+	public GameObject[] players; 
 	
 	// Use this for initialization
 	void Start () 
@@ -32,6 +34,7 @@ public class ConstantData : MonoBehaviour
 	{
 		inputControllers = new InputControl[_activePlayers];
 		numOfPlayers = _activePlayers;
+		players = new GameObject[numOfPlayers];
 		int counter = 0;   //Counter which is used to place elements into the new XInputPlayers structure
 
 		//For all players

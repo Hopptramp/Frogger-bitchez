@@ -9,7 +9,7 @@ public class DisplayScript : MonoBehaviour
 
 	private Text gameTimerText;
 	public int gameTimeSeconds = 120;
-	private float time = 0;
+	[HideInInspector] public float time = 0;
 	private bool gameBegun = false;
 
 	// Use this for initialization
@@ -57,6 +57,9 @@ public class DisplayScript : MonoBehaviour
 		else 
 		{
 			startTimerText.text = "";
+			// update the array of players
+			GameObject.Find("Manager").GetComponent<PlayerManager>().updateConstantData();
+			//move to next scene from here
 		}
 	}
 

@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		// CHANGE THIS SO THAT WE CAN INSTANT RESET
 		if (Input.GetKey(KeyCode.A))
 		{
 			players[0].SetActive(true);
@@ -28,6 +29,26 @@ public class PlayerManager : MonoBehaviour
 			
 			players[1].transform.position = new Vector3 (gameObject.transform.position.x, -37, 0);
 		}
+	}
+
+	public void tryEndLevel(GameObject _player)
+	{
+		// set the player finished to be true
+		_player.GetComponent<PlayerMain> ().isFinished = true;
+
+		for (int i = 0; i < NUM_OF_PLAYERS; ++i)
+		{
+			if(players[i].GetComponent<PlayerMain>().isFinished == false)
+			{
+				return;
+			}
+		}
+		updateConstantData ();
+	}
+
+	public void updateConstantData()
+	{
+		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().players = players;
 	}
 
 	public void SetupPlayers(int _numPlayers)

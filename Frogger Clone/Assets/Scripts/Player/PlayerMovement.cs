@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 	public float movementSpeed = 5.0f;
 	public float completeMoveDistance = 3.09f;
 	public float movingDistance = 0.0f;
+	private float timeTaken = 0.0f;
 
 	public bool completedMove = false;
 	public bool moving = false;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 	
 	public AudioClip moveSound1;
 	public AudioClip gameOverSound;
+	public AudioClip winSound;
 
 	enum Direction
 	{
@@ -480,11 +482,23 @@ public class PlayerMovement : MonoBehaviour
 		//GameObject sprite = transform.Find ("Sprite").gameObject; 
 		//sprite.SetActive (false);
 		gameObject.SetActive(false);
+		//set is finished
+		GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
+	}
+	public void OnWin ()
+	{
+		// finds the time taken for the player to reach the end.
+		timeTaken = GameObject.Find ("DisplayCanvas").GetComponent<DisplayScript> ().gameTimeSeconds - GameObject.Find ("DisplayCanvas").GetComponent<DisplayScript> ().time;
+		// stop the player from moving
+		SetMovementIsPaused (true);
+		// play win sound
+		SoundManager.instance.RandomizeSfx (winSound);
+		// set is finished
+		GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
 	}
 	void audioLoop()
 	{
-		//if (moving == true) {
-		if (isAlive == false) {
+		if (isMovementPaused == true) {
 		}
 		else if (movingDistance >= completeMoveDistance -0.01) 
 		{
@@ -503,6 +517,5 @@ public class PlayerMovement : MonoBehaviour
 		{
 			movingDistance = completeMoveDistance -0.02f;
 		}
-		//}
 	}
 }

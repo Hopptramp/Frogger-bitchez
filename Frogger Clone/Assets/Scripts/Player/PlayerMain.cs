@@ -12,6 +12,7 @@ public class PlayerMain : MonoBehaviour
 {
 	private int playerNumber;
 	private InputControl inputControl;
+	public bool isFinished = false;
 
 	// Use this for initialization
 	void Start () 
@@ -38,5 +39,10 @@ public class PlayerMain : MonoBehaviour
 	public void OnDeath()
 	{
 		GetComponent<PlayerMovement> ().OnDeath ();
+	}
+
+	public void onWin()
+	{
+		GetComponent<PlayerMovement> ().OnWin ();
 	}
 }
