@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public bool completedMove = false;
 	public bool moving = false;
-	private bool isMovementPaused = false;
+	public bool isMovementPaused = false;
 	public bool isAlive = true;
 
 	private const float DPAD_GROUND = 0.95f;
