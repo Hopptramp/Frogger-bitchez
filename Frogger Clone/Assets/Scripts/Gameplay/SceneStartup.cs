@@ -5,14 +5,13 @@ public class SceneStartup : MonoBehaviour
 {
 	private bool hasGameBegun = false;
 	private float timeOnSetupFinished;
+	[Range(0.0f, 30.0f)]public float startTimer = 3.0f;
 
 	private DisplayScript displayScript;
 	private GameObject playerPrefab;
 	private PlayerManager playerMan;
 
 	private int NUM_OF_PLAYERS;
-
-	public float startTimer = 3.0f;
 
 	// Use this for initialization
 	void Start () 
@@ -42,6 +41,7 @@ public class SceneStartup : MonoBehaviour
 			if(Time.realtimeSinceStartup - timeOnSetupFinished > startTimer)
 			{
 				displayScript.UpdateTimer (startTimer);
+				displayScript.GameBegun();
 				playerMan.PlayersStart();
 				hasGameBegun = true;
 			}
