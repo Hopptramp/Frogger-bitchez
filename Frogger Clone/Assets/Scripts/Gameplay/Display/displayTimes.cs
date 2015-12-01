@@ -1,9 +1,6 @@
-<<<<<<< HEAD
+
 using UnityEngine;
-=======
-﻿using UnityEngine;
 using UnityEngine.UI;
->>>>>>> origin/master
 using System.Collections;
 
 public class displayTimes : MonoBehaviour 
@@ -49,13 +46,10 @@ public class displayTimes : MonoBehaviour
 		float height1 = 200;
 		float height2 = -200;
 
-<<<<<<< HEAD
-		int height1 = 20;
-		int height2 = 20;
-=======
+
 		// starting X pos for each banner
 		float startPoint = centrePoint.x - ((numOfPlayers / 2) * titleWidth);
->>>>>>> origin/master
+
 
 		// initialise the banner pos variable
 		Vector3 bannerPos = new Vector3(0.0f, 0.0f, 0.0f);

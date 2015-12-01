@@ -32,6 +32,7 @@ public class DisplayScript : MonoBehaviour
 			{
 				time = 0.0f;
 				gameTimerText.text = TimeToDisplay ();
+				Application.LoadLevel("EndScene");
 			}
 		}
 	}
@@ -59,7 +60,7 @@ public class DisplayScript : MonoBehaviour
 			startTimerText.text = "";
 			// update the array of players
 			GameObject.Find("Managers").GetComponent<PlayerManager>().updateConstantData();
-			Application.LoadLevel("EndScene");
+
 		}
 	}
 
@@ -75,6 +76,7 @@ public class DisplayScript : MonoBehaviour
 		else 
 		{
 			display += "0" + seconds.ToString();
+
 		}
 		return display;
 	}
