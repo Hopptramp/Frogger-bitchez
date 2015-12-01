@@ -10,6 +10,8 @@ public class displayTimes : MonoBehaviour
 	private GameObject _playerTitleTextComponent;
 	private GameObject[] texts;
 
+	public Sprite[] WinStates;
+
 	private float canvasWidth;
 	private float canvasHeight;
 	private float titleWidth;
@@ -96,6 +98,10 @@ public class displayTimes : MonoBehaviour
 		string playerID = " ";
 		int timesDied = GameObject.FindGameObjectWithTag("ConstantData").GetComponent<ConstantData>().timesDied[i];
 
+		Transform playerImage = texts[i].transform.Find("Panel/playerImage");
+		Image imageComponent = playerImage.GetComponent<Image>();
+
+
 		// if the player existed
 		if (GameObject.FindGameObjectWithTag("ConstantData").GetComponent<ConstantData>().scores[i] != 0)
 		{
@@ -110,25 +116,30 @@ public class displayTimes : MonoBehaviour
 				if (timeTaken == 0)
 				{
 					result = "FAILED";
+					imageComponent.sprite = WinStates [0];
 				}
 				else if (score < 3)
 				{
 					if (score == 1)
 					{
 						result = score + "st \n" + timeTaken + " seconds";
+						imageComponent.sprite = WinStates [1];
 					}
 					if (score == 2)
 					{
 						result = score + "nd \n" + timeTaken + " seconds";
+						imageComponent.sprite = WinStates [2];
 					}
 					if (score == 3)
 					{
 						result = score + "rd \n" + timeTaken + " seconds";
+						imageComponent.sprite = WinStates [3];
 					}
 				}
 				else 
 				{
 					result = score + "th /n" + timeTaken + "seconds";
+					imageComponent.sprite = WinStates [0];
 				}
 			}
 			else
