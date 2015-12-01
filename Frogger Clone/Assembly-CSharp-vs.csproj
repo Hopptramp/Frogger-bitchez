@@ -47,17 +47,24 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Audio\SoundManager.cs" />
-     <Compile Include="Assets\Scripts\ConstantData.cs" />
-     <Compile Include="Assets\Scripts\ControllerManager.cs" />
-     <Compile Include="Assets\Scripts\LevelTileManager.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Display\DisplayScript.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Display\JoinDisplay.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Display\Timer.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Display\displayTimes.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\SceneStartup.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\WinZoneLogic.cs" />
+     <Compile Include="Assets\Scripts\Managers\ConstantData.cs" />
+     <Compile Include="Assets\Scripts\Managers\ControllerManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\LevelTileManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\ObjectManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMain.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\SceneStartup.cs" />
-     <Compile Include="Assets\Scripts\Scrolling.cs" />
+     <Compile Include="Assets\Scripts\Player\playerCollision.cs" />
      <Compile Include="Assets\Scripts\Spawning\Spawner.cs" />
+     <Compile Include="Assets\Scripts\Spawning\TurtleScript.cs" />
      <Compile Include="Assets\Scripts\Spawning\baseObject.cs" />
      <Compile Include="Assets\Scripts\Spawning\boundaryDelete.cs" />
-     <Compile Include="Assets\Scripts\Spawning\structs\logStructs.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
