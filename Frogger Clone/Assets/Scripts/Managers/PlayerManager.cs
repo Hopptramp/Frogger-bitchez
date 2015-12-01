@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
 	public GameObject playerPrefab;
 	public GameObject winZonePrefab;
     public bool instantReset = true;
+	private int scorePosition = 1;
 
     // Use this for initialization
     void Start () 
@@ -25,6 +26,14 @@ public class PlayerManager : MonoBehaviour
     {
         // set the player finished to be true
         _player.GetComponent<PlayerMain>().isFinished = true;
+		// tell the player where they placed + time
+		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().scores[_player.GetComponent<PlayerMain>().playerNumber - 1] = scorePosition;
+		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().timeTaken[_player.GetComponent<PlayerMain>().playerNumber - 1] = _player.GetComponent<PlayerMovement>().timeTaken;
+		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().timesDied[_player.GetComponent<PlayerMain>().playerNumber - 1] = _player.GetComponent<PlayerMovement>().timesDied;
+		GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().instantRespawn = instantReset;
+		//increment the score position ready for the next player
+		++scorePosition;
+
 
         for (int i = 0; i < NUM_OF_PLAYERS; ++i)
         {

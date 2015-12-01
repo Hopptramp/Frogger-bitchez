@@ -18,7 +18,9 @@ public class PlayerMovement : MonoBehaviour
 	public float movementSpeed = 5.0f;
 	public float completeMoveDistance = 3.09f;
 	public float movingDistance = 0.0f;
-	private float timeTaken = 0.0f;
+	public float timeTaken = 0.0f;
+	public int timesDied = 0;
+	public int scorePosition = 0;
 
 	public bool completedMove = false;
 	public bool moving = false;
@@ -475,6 +477,7 @@ public class PlayerMovement : MonoBehaviour
 	}
 	public void OnDeath()
 	{
+		++timesDied;
 		Destroy (Instantiate(explosion, gameObject.transform.position , Quaternion.identity), explosionLifetime);
 		//isAlive = false;
 		SoundManager.instance.RandomizeSfx(gameOverSound);
@@ -485,6 +488,7 @@ public class PlayerMovement : MonoBehaviour
         if (GameObject.Find("Managers").GetComponent<PlayerManager>().instantReset)
         {
             resetPosition();
+			++timesDied;
         }
 		else
 		{
