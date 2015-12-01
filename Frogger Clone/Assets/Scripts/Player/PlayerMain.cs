@@ -10,7 +10,7 @@ using XInputDotNetPure;
 
 public class PlayerMain : MonoBehaviour 
 {
-	private int playerNumber;
+	public int playerNumber;
 	private InputControl inputControl;
 	public bool isFinished = false;
 	private bool deathInFinalZone = true;

@@ -14,8 +14,14 @@ public class ConstantData : MonoBehaviour
 	public InputControl[] inputControllers;
 	public int numOfPlayers;
 
+	// score variables to be held
+	public int[] timesDied;
+	public int[] scores;
+	public float[] timeTaken;
+
 	public GameObject[] players; 
 	public bool setupPlayersFromData = false;
+	public bool instantRespawn = false;
 	
 	// Use this for initialization
 	void Start () 
@@ -36,6 +42,10 @@ public class ConstantData : MonoBehaviour
 		inputControllers = new InputControl[_activePlayers];
 		numOfPlayers = _activePlayers;
 		players = new GameObject[numOfPlayers];
+		// hardcoding is the best thing ever
+		scores = new int[MAX_PLAYERS];
+		timeTaken = new float[MAX_PLAYERS];
+		timesDied = new int[MAX_PLAYERS];
 		int counter = 0;   //Counter which is used to place elements into the new XInputPlayers structure
 
 		//For all players
