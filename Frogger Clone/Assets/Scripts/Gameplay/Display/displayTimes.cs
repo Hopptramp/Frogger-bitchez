@@ -9,18 +9,21 @@ public class displayTimes : MonoBehaviour
 
 	private float canvasWidth;
 	private float canvasHeight;
-	private Vector3 centrePoint;
+
 	private float spacingX = 0.1f;
 	private float spacingY;
+
+	private Vector3 centrePoint;
 
 	// Use this for initialization
 	void Start ()
 	{
 		// initialise the player array
-		numOfPlayers = GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().numOfPlayers;
+		//numOfPlayers = GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().numOfPlayers;
+		numOfPlayers = 20;
 		players = new GameObject[numOfPlayers];
 		//fill the player array from constant data
-		players = GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().players;
+		//players = GameObject.FindGameObjectWithTag ("ConstantData").GetComponent<ConstantData> ().players;
 		//get canvas height and width
 		canvasWidth = GameObject.Find ("Canvas").GetComponent<RectTransform> ().rect.width;
 		canvasHeight = GameObject.Find ("Canvas").GetComponent<RectTransform> ().rect.height;
@@ -33,13 +36,26 @@ public class displayTimes : MonoBehaviour
 		float playerBanner = totalWidth - spacingX;
 		float centrePositionX = (playerBanner / 2) + (spacingX / 2);
 
-		Vector3 count = new Vector3(0.0f, 0.0f, 0.0f);
+
+		Vector3 bannerPos = new Vector3(0.0f, 0.0f, 0.0f);
+		//Vector3 heightPos = new Vector3(0.0f, 0.0f, 0.0f);
 
 		// Before here
 		for (int i = 0; i < numOfPlayers; ++i)
 		{
-			count.x += centrePositionX;
-			Instantiate(playerTitle, count , Quaternion.identity);
+
+			if(i < (numOfPlayers / 2))
+			{
+				bannerPos.x += centrePositionX;
+				bannerPos.y = height1;
+				Instantiate(playerTitle, bannerPos , Quaternion.identity);
+			}
+			else if (i > (numOfPlayers / 2))
+			{
+				bannerPos.x += centrePositionX;
+				bannerPos.y = height2;
+				Instantiate(playerTitle, bannerPos , Quaternion.identity);
+			}
 		}
 	}
 
