@@ -495,6 +495,11 @@ public class PlayerMovement : MonoBehaviour
         	GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
 		}
 	}
+
+	public void tryEndLevel()
+	{
+		GameObject.Find ("Managers").GetComponent<PlayerManager> ().tryEndLevel (gameObject);
+	}
     void resetPosition()
     {
         gameObject.SetActive(true);

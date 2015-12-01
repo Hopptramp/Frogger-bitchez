@@ -32,6 +32,11 @@ public class DisplayScript : MonoBehaviour
 			{
 				time = 0.0f;
 				gameTimerText.text = TimeToDisplay ();
+
+				for (int i = 0; i < GameObject.Find ("Managers").GetComponent<PlayerManager>().GetAllPlayers().Length; ++i)
+				{
+					GameObject.Find ("Managers").GetComponent<PlayerManager>().GetAllPlayers()[i].GetComponent<PlayerMovement>().tryEndLevel();
+				}
 				Application.LoadLevel("EndScene");
 			}
 		}
