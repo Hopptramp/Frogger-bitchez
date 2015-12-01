@@ -207,6 +207,32 @@ public class Spawner : MonoBehaviour
 		{
 			baseScript.InvertDirection();
 		}
+
+		if(objects[_objectID].type == ObjectType.SINGLE_TURTLE)
+		{
+			float maxSwim = Random.Range (0.75f,1.25f);
+			float maxDive = Random.Range (0.9f,1.1f);
+			float start = Random.Range (0.0f, 12.5f);
+			spawnedObject.transform.GetChild(0).GetChild(0).GetComponent<TurtleScript>().ApplyRandomDive(maxSwim, maxDive, start);
+		}
+		else if(objects[_objectID].type == ObjectType.DOUBLE_TURTLE)
+		{
+			float maxSwim = Random.Range (0.75f,1.25f);
+			float maxDive = Random.Range (0.9f,1.1f);
+			float start = Random.Range (0.0f, 12.5f);
+			spawnedObject.transform.GetChild(0).GetChild(0).GetComponent<TurtleScript>().ApplyRandomDive(maxSwim, maxDive, start);
+			spawnedObject.transform.GetChild(0).GetChild(1).GetComponent<TurtleScript>().ApplyRandomDive(maxSwim, maxDive, start);
+		}
+		if(objects[_objectID].type == ObjectType.TRIPLE_TURTLE)
+		{
+			float maxSwim = Random.Range (0.75f,1.25f);
+			float maxDive = Random.Range (0.9f,1.1f);
+			float start = Random.Range (0.0f, 12.5f);
+			spawnedObject.transform.GetChild(0).GetChild(0).GetComponent<TurtleScript>().ApplyRandomDive(maxSwim, maxDive, start);
+			spawnedObject.transform.GetChild(0).GetChild(1).GetComponent<TurtleScript>().ApplyRandomDive(maxSwim, maxDive, start);
+			spawnedObject.transform.GetChild(0).GetChild(2).GetComponent<TurtleScript>().ApplyRandomDive(maxSwim, maxDive, start);
+		}
+
 		return spawnedObject;
 	}
 }

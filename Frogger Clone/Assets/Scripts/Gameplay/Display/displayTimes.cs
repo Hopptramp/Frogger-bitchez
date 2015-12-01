@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class displayTimes : MonoBehaviour 
@@ -36,6 +36,8 @@ public class displayTimes : MonoBehaviour
 		float playerBanner = totalWidth - spacingX;
 		float centrePositionX = (playerBanner / 2) + (spacingX / 2);
 
+		int height1 = 20;
+		int height2 = 20;
 
 		Vector3 bannerPos = new Vector3(0.0f, 0.0f, 0.0f);
 		//Vector3 heightPos = new Vector3(0.0f, 0.0f, 0.0f);

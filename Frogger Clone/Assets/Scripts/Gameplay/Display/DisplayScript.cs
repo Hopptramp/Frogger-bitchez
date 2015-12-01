@@ -59,7 +59,7 @@ public class DisplayScript : MonoBehaviour
 			startTimerText.text = "";
 			// update the array of players
 			GameObject.Find("Managers").GetComponent<PlayerManager>().updateConstantData();
-			//move to next scene from here
+			Application.LoadLevel("EndScene");
 		}
 	}
 

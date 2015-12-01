@@ -12,6 +12,9 @@ public enum ObjectType
 	CAR2,
 	CAR3,
 	VAN,
+	SINGLE_TURTLE,
+	DOUBLE_TURTLE,
+	TRIPLE_TURTLE,
 	ALL_TYPES
 }
 
